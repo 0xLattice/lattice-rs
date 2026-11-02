@@ -2,9 +2,9 @@
 
 The platform is published as 17 separate repositories in `0xLattice` on
 `codex/rust-platform-port`. The reviewed source revisions are pinned in
-[`platform-revisions.json`](../platform-revisions.json). New repositories are
-private; access requires configured GitHub credentials. Existing repository
-visibility and default branches are preserved. This is a development checkpoint,
+[`platform-revisions.json`](../platform-revisions.json). All platform repositories are public. Cashew and the node were recreated
+with anonymous source history; the other existing public repositories retain
+their upstream history. This is a development checkpoint,
 not a complete platform release.
 
 ```sh
@@ -71,8 +71,8 @@ checks and their reports separate. Repository PORTING documents identify the
 remaining implementation gaps and narrower verification evidence.
 
 The platform workflow now bootstraps these exact siblings and checks all 17
-repositories on Linux, macOS and Windows. Its cross-repository read credential
-must be configured before remote validation can pass. Existing standalone Ivy
+repositories on Linux, macOS and Windows. Public source fetches require no cross-repository credential; actual green
+remote runs remain required before claiming platform CI coverage. Existing standalone Ivy
 CI still does not provide its sibling Tally dependency. See [BOOTSTRAP.md](BOOTSTRAP.md).
 
 ## Exporting exact local source inputs
@@ -128,8 +128,7 @@ Only four of the 17 local repositories currently have GitHub workflows:
 `multikey-rs`, `ivy-rs`, `lattice-rs` and `lattice-miner-gpu`. Multikey and the GPU
 worker have self-contained Cargo dependency layouts; their existing workflows
 still need results against the final revisions. The Lattice workflow now provides a central all-17-repository matrix using exact
-sibling pins and the current tested revision. Private access configuration and
-green remote results remain required. The standalone Ivy workflow still checks
+sibling pins and the current tested revision. Green remote results remain required. The standalone Ivy workflow still checks
 out only itself. The other repositories are covered by the central manifest
 job once operational; standalone per-repository jobs remain to be added.
 
@@ -151,5 +150,4 @@ results apply to the archive's exact inputs, not later ongoing source edits.
 complete manifest of real repository commit IDs and builds isolated sibling
 checkouts with configured Git authentication. It refuses dirty or partial
 destinations and never invents revision pins. See [BOOTSTRAP.md](BOOTSTRAP.md).
-Local fixture tests cover all 17 repositories. Remote bootstrap requires access
-to the private repositories.
+Local fixture tests cover all 17 repositories. Remote bootstrap fetches the public repositories without a shared credential.

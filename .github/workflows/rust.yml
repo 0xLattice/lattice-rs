@@ -38,18 +38,10 @@ jobs:
         run: >-
           python control/scripts/platform-ci-manifest.py control/platform-revisions.json
           --source control --repository "$CI_REPOSITORY" --output ci-revisions.json
-      - name: Fetch private siblings
-        env:
-          GH_TOKEN: ${{ secrets.LATTICE_PLATFORM_READ_TOKEN }}
-          GIT_CONFIG_COUNT: '1'
-          GIT_CONFIG_KEY_0: credential.helper
-          GIT_CONFIG_VALUE_0: '!gh auth git-credential'
-        run: |
-          if [ -z "$GH_TOKEN" ]; then
-            echo 'Configure LATTICE_PLATFORM_READ_TOKEN with Contents read access to the 17 manifest repositories.'
-            exit 1
-          fi
-          python control/scripts/platform-bootstrap.py ci-revisions.json --destination sources --report bootstrap-result.json
+      - name: Fetch public siblings at exact revisions
+        run: >-
+          python control/scripts/platform-bootstrap.py ci-revisions.json
+          --destination sources --report bootstrap-result.json
       - name: Install Rust toolchain
         run: rustup toolchain install 1.96.0 --profile minimal --component rustfmt --component clippy
       - name: Check all platform repositories
