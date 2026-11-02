@@ -1,0 +1,241 @@
+{
+  "upstream_sha": "dda2d852429a27be6043599b63bde81530cd9514",
+  "sources": "Full unchanged Sources/LatticePrimitives, LatticePoW, LatticeValidation; same-package executable driver.",
+  "oracle_diagnostics": "warning: 'wasmkit': found 1 file(s) which are unhandled; explicitly declare them as resources or exclude from the target\n    /private/tmp/lattice-genesis-oracle/.build/checkouts/WasmKit/Sources/WasmKitGDBHandler/LICENSE.txt\nwarning: 'wasmkit': found 1 file(s) which are unhandled; explicitly declare them as resources or exclude from the target\n    /private/tmp/lattice-genesis-oracle/.build/checkouts/WasmKit/Sources/GDBRemoteProtocol/LICENSE.txt\n[0/1] Planning build\nBuilding for debugging...\n[0/3] Write swift-version--58304C5D6DBC2206.txt\nBuild of product 'BuilderOracle' complete! (3.31s)\ngenesis_nonce_gap: nonceGap\ngenesis_growth_exceeded: stateGrowthExceeded\ninvalid_state_atom: invalidTransactionContent\nwrong_commitment_entering_state: unmatchedChildCommitment(\"A\")\ninvalid_explicit_directory: invalidChildDirectory(\"A/B\")\nconflicting_child_commitment: unmatchedChildCommitment(\"A\")\nnext_bad_child_missing_state: notFound(\"bafyreidqzf3xxxwybhou6t73kx2isyhvtjarwbafuglb52u5w4soetbf2a\")\nheight_three_missing_anchor: missingDifficultyAnchor\nheight_overflow: heightOverflow\ntemplate_invalid_fee: invalidCoinbase(LatticeValidation.CoinbaseError.feeRuleViolated)\n",
+  "scope": "Actual buildGenesisWithTransition/buildChildGenesisWithTransition/buildBlockWithTransition. Compares template CID, post-state CID, materialization presence, and StateDiff. No admission or import persistence.",
+  "swift_version": "Apple Swift version 6.3.3 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)\nTarget: arm64-apple-macosx26.0",
+  "package_resolved": {
+    "originHash": "5d7c8169344c48749033884243d7388f2b70b2523baf8d9be76fdddbcbe18f61",
+    "pins": [
+      {
+        "identity": "arraytrie",
+        "kind": "remoteSourceControl",
+        "state": {
+          "revision": "8f8d3aacbd86999fffeebd60a0e89a423a41a8dc",
+          "version": "1.0.1"
+        }
+      },
+      {
+        "identity": "cashew",
+        "kind": "remoteSourceControl",
+        "state": {
+          "revision": "5daec3cdfd3d572d9437daa7a84242f7ae5a96d5",
+          "version": "5.0.3"
+        }
+      },
+      {
+        "identity": "collectionconcurrencykit",
+        "kind": "remoteSourceControl",
+        "state": {
+          "revision": "b4f23e24b5a1bff301efc5e70871083ca029ff95",
+          "version": "0.2.0"
+        }
+      },
+      {
+        "identity": "cryptoswift",
+        "kind": "remoteSourceControl",
+        "state": {
+          "revision": "f2a627b84c1ff96f21ac2fcb623ab36142dd5512",
+          "version": "1.10.0"
+        }
+      },
+      {
+        "identity": "multikey",
+        "kind": "remoteSourceControl",
+        "state": {
+          "revision": "413c70e96c4de9af573e16b58ffc6a107911eb9f",
+          "version": "1.0.0"
+        }
+      },
+      {
+        "identity": "swift-argument-parser",
+        "kind": "remoteSourceControl",
+        "state": {
+          "revision": "6a52f3251125d74daf04fcbd5e6f08a75d074382",
+          "version": "1.8.2"
+        }
+      },
+      {
+        "identity": "swift-asn1",
+        "kind": "remoteSourceControl",
+        "state": {
+          "revision": "a9a5efd40eaf558a2bcd48d64b1d1646be686008",
+          "version": "1.7.1"
+        }
+      },
+      {
+        "identity": "swift-atomics",
+        "kind": "remoteSourceControl",
+        "state": {
+          "revision": "b601256eab081c0f92f059e12818ac1d4f178ff7",
+          "version": "1.3.0"
+        }
+      },
+      {
+        "identity": "swift-bases",
+        "kind": "remoteSourceControl",
+        "state": {
+          "revision": "96615d4b582f9f6536d8278304ce2a64c8e5288a",
+          "version": "0.2.0"
+        }
+      },
+      {
+        "identity": "swift-cid",
+        "kind": "remoteSourceControl",
+        "state": {
+          "revision": "b9138d3a790ff149d44a6d20d74357e45cfc1706",
+          "version": "0.2.1"
+        }
+      },
+      {
+        "identity": "swift-collections",
+        "kind": "remoteSourceControl",
+        "state": {
+          "revision": "a0cb0954ecb21e4e31b0070e6ed5674e8556685a",
+          "version": "1.6.0"
+        }
+      },
+      {
+        "identity": "swift-crypto",
+        "kind": "remoteSourceControl",
+        "state": {
+          "revision": "95ba0316a9b733e92bb6b071255ff46263bbe7dc",
+          "version": "3.15.1"
+        }
+      },
+      {
+        "identity": "swift-log",
+        "kind": "remoteSourceControl",
+        "state": {
+          "revision": "92448c359f00ebe36ae97d3bd9086f13c7692b5a",
+          "version": "1.13.2"
+        }
+      },
+      {
+        "identity": "swift-multibase",
+        "kind": "remoteSourceControl",
+        "state": {
+          "revision": "24099da1c4f4222ea4e12586d6f9b4ecf7840b60",
+          "version": "0.2.1"
+        }
+      },
+      {
+        "identity": "swift-multicodec",
+        "kind": "remoteSourceControl",
+        "state": {
+          "revision": "8b22b5941f934a51945d50793b104114a92a493c",
+          "version": "0.2.1"
+        }
+      },
+      {
+        "identity": "swift-multihash",
+        "kind": "remoteSourceControl",
+        "state": {
+          "revision": "3f96ded8e8af0787bfc7b90fbb54db28d3a28302",
+          "version": "0.2.1"
+        }
+      },
+      {
+        "identity": "swift-nio",
+        "kind": "remoteSourceControl",
+        "state": {
+          "revision": "77b84ac2cd2ac9e4ac67d19f045fd5b434f56967",
+          "version": "2.101.0"
+        }
+      },
+      {
+        "identity": "swift-system",
+        "kind": "remoteSourceControl",
+        "state": {
+          "revision": "669763cfd5806a67e21972d7e5e2d6b80b1ea985",
+          "version": "1.6.5"
+        }
+      },
+      {
+        "identity": "swift-varint",
+        "kind": "remoteSourceControl",
+        "state": {
+          "revision": "b62beeea61d5c7c434d7af8a212211a4e7a8f926",
+          "version": "0.2.0"
+        }
+      },
+      {
+        "identity": "triedictionary",
+        "kind": "remoteSourceControl",
+        "state": {
+          "revision": "3ee63e31eb7d53cf56a5e7786e6671a7c4e422f5",
+          "version": "0.0.9"
+        }
+      },
+      {
+        "identity": "uint256",
+        "kind": "remoteSourceControl",
+        "state": {
+          "revision": "19e20ada50f87beb33f1f073f9c3fba786a4564e",
+          "version": "1.1.0"
+        }
+      },
+      {
+        "identity": "wasmkit",
+        "kind": "remoteSourceControl",
+        "state": {
+          "revision": "5c389084423c08136040ab8a41f73d4e76fb7b21",
+          "version": "0.2.2"
+        }
+      }
+    ],
+    "version": 3
+  },
+  "source_sha256": {
+    "Sources/LatticePrimitives/Actions/AccountAction.swift": "103620e7b1a6fc7d30fc4fa29e250ba1cdf9fe94fd05a86fdebdf83c0afcfd70",
+    "Sources/LatticePrimitives/Actions/Action.swift": "7dbdf94121e10533cb0023c1938ecbf30d744fc6b88f7d4e2d9815ef6baf8997",
+    "Sources/LatticePrimitives/Actions/DepositAction.swift": "ea4e77735864fab06cf28cbda9502e49ce8481e683a2a9fa78fa8bb7b8b57bac",
+    "Sources/LatticePrimitives/Actions/ReceiptAction.swift": "f350d9eac8a98f171a0b0b5453f94c58e91c3c24c1785ebf90740a9136a71852",
+    "Sources/LatticePrimitives/Actions/WithdrawalAction.swift": "b76dbdebc5a9964393841336ebd8cdd0b64a0cd5b6caa64d68c9abbc292f2221",
+    "Sources/LatticePrimitives/Block/Block+Content.swift": "fc70a5a67af5ee323a2de11c023169285064d3480560c3c3bfdeb31f99448157",
+    "Sources/LatticePrimitives/Block/Block.swift": "3db6a2f8aaacce9c6a0938eb1ce34004676b24b51d6a074a2a3d252745c1f641",
+    "Sources/LatticePrimitives/Block/ChainSpec.swift": "32bbca0b58489e70f60820130fef963c3d6413a5c60f085b7a5921ca091e125e",
+    "Sources/LatticePrimitives/CIDDigest.swift": "53ee47cf62534c73727b92d89477360cb0fff869f940e392071830929e1d79f3",
+    "Sources/LatticePrimitives/CIDIdentity.swift": "1d2a518d2cc5fc626b06cc29d723c068a2a6f852defd0dbb1049e776e3c51e4f",
+    "Sources/LatticePrimitives/Core/PublicKey.swift": "905063ae82939ff919ffffa2e45c36a34d6262e0f5747070c2c3f24572a36518",
+    "Sources/LatticePrimitives/CryptoUtils.swift": "de59463371bbd40321a89cdee9286d06eac62547037cef14ff2bdab1a3081367",
+    "Sources/LatticePrimitives/DirectoryGrammar.swift": "fb912e025555e5ffd83d94c0b361ad84387607ae0a268c545bbe0c3b427a1ac0",
+    "Sources/LatticePrimitives/Policy/WasmPolicyRef.swift": "37e1c5b26b8796e7950074ecedca6edfee3e1f8243ac208805a02e1695aa4e2c",
+    "Sources/LatticePrimitives/State/AccountState.swift": "89ee9e21172e690eeddd781530361708d39b665f2d9ea8a2d6451e76b4c7f60b",
+    "Sources/LatticePrimitives/State/DepositState.swift": "aa3a6603cb223fd6c877f77817cb5b6aaf9a044c7a6f7c7c8d636c3a8bfd59c9",
+    "Sources/LatticePrimitives/State/GeneralState.swift": "b48b47b680b4cb7fc494c536179f16ab4f0abd068a10b57ce7b5c7f847b2a105",
+    "Sources/LatticePrimitives/State/LatticeState.swift": "a7ad11fb63980848fadb0b670691cdb1136012c7de78c9439a5c0dcaaf2de5e6",
+    "Sources/LatticePrimitives/State/ReceiptState.swift": "26c654885b8205963ffc909c9fb5fb0dd226054f64c61327424f6b63a29e1a1c",
+    "Sources/LatticePrimitives/State/ReplacedCIDs.swift": "f1d570ec1e135297b1397cde7300d7bdb8f1945250248d42eb946e7e78b64870",
+    "Sources/LatticePrimitives/State/StateErrors.swift": "1ab2d1611bf57086e85c520dabd7867cd3b73ef945ee6fb7475084310746abc4",
+    "Sources/LatticePrimitives/Transaction/Transaction.swift": "28ae1692349958777fa1bad73602746118602155474b3ae1756ba02df7a5546a",
+    "Sources/LatticePrimitives/Transaction/TransactionBody.swift": "128395f212d0b41d6949760b88357c9f65e05cd09076dc66ce95d59b5a8010c0",
+    "Sources/LatticePrimitives/Transaction/TransactionSigning.swift": "cec22d75a8beddde1368139cfe017d646f17e0747241910d977b10bd0d489606",
+    "Sources/LatticePrimitives/UInt256+Extensions.swift": "e30119b492702bf868350a34092fe6cf43ff10878348acde2181339b94d5e815",
+    "Sources/LatticePoW/ChainSpec+Asert.swift": "b14a600985b85f8c4726529c339fc666eae9fd9696ad17073a197e9b72d05a1a",
+    "Sources/LatticePoW/DifficultyAnchorSource.swift": "bc411f81226e53c6aa2d36ddd89855284c87fd27ac9d929565d8c72f4faaa74d",
+    "Sources/LatticePoW/FixedWidthWork.swift": "28217528f2a986e0681e60b465e547f8b40930f7244fa416079af91df62f6a17",
+    "Sources/LatticePoW/ProofOfWork.swift": "3c62e2a737db7826f7a36e710718926383597941b6bfe34b63d3a8d9bd838566",
+    "Sources/LatticePoW/WorkSum.swift": "397cdd2c61f2bfe4e201b8b0984d88e9db362103a8b196cb215c6802cc0e5541",
+    "Sources/LatticeValidation/Actions/Action+Verify.swift": "790ef25dd5f502b7024d71c41260493dd58e436b7a4ef63aa51588abba524e8a",
+    "Sources/LatticeValidation/Block/Block+Coinbase.swift": "8d8cc7aa180722363a3007e7c41a4f2c662d1ab86cd5363f4f647511e5cf77da",
+    "Sources/LatticeValidation/Block/Block+Validate.swift": "8d5f7c4a28e778214b78457e1bd7bd78f03ae79a7a11acc1e1966928a33ff5c5",
+    "Sources/LatticeValidation/Block/BlockBuilder.swift": "b9d1c70c3bd6e2715036d0a14e7e2e0f8a5be9ad66da75206b19c9de86217fb8",
+    "Sources/LatticeValidation/Block/ChainSpec+Validity.swift": "69f33a6960036ee65c4f834812d2b24cda736d992af272803e31303c35983681",
+    "Sources/LatticeValidation/Block/ValidationErrors.swift": "3a3a3a7228b375b877593f9f9059552346ecffbdfdf4ac64e01c6691790b044f",
+    "Sources/LatticeValidation/Genesis.swift": "a3f5137bb6b5690193f0dc51a535a03d5e8775610dd1c8c68acb5ed99335d53d",
+    "Sources/LatticeValidation/Policy/WasmModuleCache.swift": "46abc965bea577081de482b84001fe63bdfe4dd2d1bf1edc78e5973c1f4874bb",
+    "Sources/LatticeValidation/Policy/WasmPolicy.swift": "b9816a056640a29e0f64856b6def3f76e777e50d4ffebd40f3c0f21832ac13e9",
+    "Sources/LatticeValidation/Policy/WasmPolicyDeterminismScan.swift": "e94633cb0649a7bbcd569342f8e2764eef6a909d81802070ba1bb21e79363775",
+    "Sources/LatticeValidation/State/AccountState+Transition.swift": "67b215276ebefafa1007c22fd1498e2033854d5da745211a5d199e7de5016e45",
+    "Sources/LatticeValidation/State/DepositState+Transition.swift": "8df7d11ae089515d1791645522458957203a6a2fc9b2ed93552ed385e302ece8",
+    "Sources/LatticeValidation/State/GeneralState+Transition.swift": "f8d8cbef89b0b950107efa5b109f5e75c348bf52c75e9f0460aec869cb37c22a",
+    "Sources/LatticeValidation/State/LatticeState+Transition.swift": "9779d3dead452072685710409a5a3a0d937d952469f96af3f07762c722e1eac8",
+    "Sources/LatticeValidation/State/ReceiptState+Transition.swift": "16b77def42f3e595cccb5f6117c1f1a89f3caa4c3c4c996e64fd0fbd8acc9c64",
+    "Sources/LatticeValidation/Transaction/Transaction+Validity.swift": "90f42526041f6dc0cd0bb9c4bbcc5a7e320cfed22d692d0f20fc63332cb09c95",
+    "Sources/LatticeValidation/Transaction/TransactionBody+Validity.swift": "edac1893740fafa5d585735ba6b3d178fdc8d65213d785c241d8644497e8075e"
+  },
+  "fixture_sha256": "98b860c9ad659e9cb89f69f91958c3eec640afd159a9ace95641af273e504df0",
+  "cases": 32,
+  "privacy_note": "Dependency locations omitted; package identities, revisions, versions and validation observations unchanged."
+}

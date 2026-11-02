@@ -1,0 +1,909 @@
+{
+  "lattice_revision": "dda2d852429a27be6043599b63bde81530cd9514",
+  "wasmkit_revision": "5c389084423c08136040ab8a41f73d4e76fb7b21",
+  "source_sha256": {
+    "WasmPolicy.swift": "b9816a056640a29e0f64856b6def3f76e777e50d4ffebd40f3c0f21832ac13e9",
+    "WasmModuleCache.swift": "46abc965bea577081de482b84001fe63bdfe4dd2d1bf1edc78e5973c1f4874bb",
+    "WasmPolicyDeterminismScan.swift": "e94633cb0649a7bbcd569342f8e2764eef6a909d81802070ba1bb21e79363775"
+  },
+  "swift_version": "Apple Swift version 6.3.3 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)\nTarget: arm64-apple-macosx26.0",
+  "swift_dependencies": {
+    "originHash": "8f44ff01d939d9c69fb274ec9ca3479649d081e8924333b3c9dbbe9c0aec7c04",
+    "pins": [
+      {
+        "identity": "swift-argument-parser",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/apple/swift-argument-parser",
+        "state": {
+          "revision": "6a52f3251125d74daf04fcbd5e6f08a75d074382",
+          "version": "1.8.2"
+        }
+      },
+      {
+        "identity": "swift-atomics",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/apple/swift-atomics.git",
+        "state": {
+          "revision": "0442cb5a3f98ab802acb777929fdb446bda11a34",
+          "version": "1.3.1"
+        }
+      },
+      {
+        "identity": "swift-collections",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/apple/swift-collections.git",
+        "state": {
+          "revision": "f96b909e1a9e469620bc5037c1e24e00153f376f",
+          "version": "1.7.5"
+        }
+      },
+      {
+        "identity": "swift-log",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/apple/swift-log",
+        "state": {
+          "revision": "c9c6bb9d275ec0d95c3ad16391f3f045dc623104",
+          "version": "1.16.2"
+        }
+      },
+      {
+        "identity": "swift-nio",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/apple/swift-nio",
+        "state": {
+          "revision": "6db9d9abd92ad7399b8a564cafbb87d3507245fa",
+          "version": "2.104.0"
+        }
+      },
+      {
+        "identity": "swift-system",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/apple/swift-system",
+        "state": {
+          "revision": "669763cfd5806a67e21972d7e5e2d6b80b1ea985",
+          "version": "1.6.5"
+        }
+      }
+    ],
+    "version": 3
+  },
+  "scope": "Exact pinned Swift runtime validate/evaluate/instantiate versus Rust WasmPolicy::new/evaluate twice. Context bytes supplied directly, no content-authentication/encoding comparison. Swift source extraction excludes async fetch/context encoder; cache key is collision-free base64 bytes in place of Cashew CID only. Eager validation is required before comparing execution.",
+  "cases": [
+    {
+      "name": "return_0",
+      "wasm_sha256": "6de8de1a7db16f813e260865df7a185d62ab0c38b9bc1b418206b7d4c6a4ef10",
+      "raw_evaluation": "reject",
+      "result": {
+        "evaluations": [
+          "reject",
+          "reject"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "return_1",
+      "wasm_sha256": "fccbb147fb9c752870ef91f5778582254f17232e67748fd3c4f6425667434aa2",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "return_2",
+      "wasm_sha256": "47a5976886cd7a688fed581530003f7d10fe44cd755fe448e8eb9e6bf48c6865",
+      "raw_evaluation": "reject",
+      "result": {
+        "evaluations": [
+          "reject",
+          "reject"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "return_-1",
+      "wasm_sha256": "060b9d6b3df456b58923a52e820b9cb5debee91a554a513e1f53def28f892e46",
+      "raw_evaluation": "reject",
+      "result": {
+        "evaluations": [
+          "reject",
+          "reject"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "return_2147483647",
+      "wasm_sha256": "4b715c71a16845e9b100227a56d24044df51011195257f8d350f8653e2c4fa91",
+      "raw_evaluation": "reject",
+      "result": {
+        "evaluations": [
+          "reject",
+          "reject"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "add_wrap",
+      "wasm_sha256": "769a40f5619c197776fca610bef5dd307822e2e8ebc62c90266739e7f62b3a2f",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "sub_wrap",
+      "wasm_sha256": "d9c17c7c76619bf48fded1331e56b6303cd4a0821122902c38263f2d2e639d2b",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "mul_wrap",
+      "wasm_sha256": "ce5dc1d309742e81a971c3026abb3b0f430600faab45f346273143935670c1f9",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "shift_mask",
+      "wasm_sha256": "6c83f57da8ad8243a62eca320b0b9bfe95ff84a0abf8dbe925a8c5eed18c09ff",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "shift_signed",
+      "wasm_sha256": "e619ff144efa5d475636223152b385281543e86aa15976e21b401f9b5f3b911c",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "shift_unsigned",
+      "wasm_sha256": "145fc30ef43cff52a9f91d42b04c4b5bc0b8885ab56b57654616d34cda7a3e4b",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "rotate",
+      "wasm_sha256": "059fe3d6a2b08362ea8c38072dc6788980a60df0b387a9432e0ddd242337936e",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "clz_zero",
+      "wasm_sha256": "4e2deb7bc8a10e7cf5ab8a2f14ae67d2a409d0773bd24dca0edf7676ab713fb8",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "ctz_zero",
+      "wasm_sha256": "1d420033fa281aade93e66c7484bc08e3213086bce191849d0ccdc07b3165c26",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "popcount",
+      "wasm_sha256": "ca824bec0c81d4c734513321b6abf9049e7a426425ec0e83c0e7e124f30aa264",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "division_signed",
+      "wasm_sha256": "bfa2ce312556a0b50dea81b9f2b735585094beacfb3824f3bf7bf3074073921d",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "division_unsigned",
+      "wasm_sha256": "435144725be4b00c0b53f6d34a011496ea785911ff2d152590ee95760a4ba006",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "remainder_overflow",
+      "wasm_sha256": "59f6312989aee1d4f78ccf9ce3242e71af4d3694b66472313b6600b869531031",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "extend_signed",
+      "wasm_sha256": "da79d2cbd92ed2602d3d5a7d7f641b7a309e067ff449961b9f720085b0c7f2ea",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "extend_unsigned",
+      "wasm_sha256": "70e3be532f6ef167e3422206a49eedf7c2ac1fc7876214a485b955d6e66a34aa",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "extend8",
+      "wasm_sha256": "901315c0e2c6d9733b68a650077e6a276331b4afea30fc62b0fd8b0f3d955271",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "extend16",
+      "wasm_sha256": "589d51bfa37f4df186c104001e1a68daab0e64f62121370f8d1f56ec4dd893d3",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "extend32",
+      "wasm_sha256": "cdf5a1aeee95727bb15dd8c45a80da7b138f6a2d7a007b84d3f87aa873d3f3aa",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "wrap64",
+      "wasm_sha256": "0de094af6808ba6a0a981b504fdbeeaf54883641e5830efa30ed9ad3487f7174",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "signed_compare",
+      "wasm_sha256": "3976d1bbcc461346036e7f7461cb5f15a4d2e218ec425d290e1199ee1e2c511a",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "unsigned_compare",
+      "wasm_sha256": "2391272986757bb3334073fe72bb7a01bb288fb335fa19b84ef1135a4e0f8e28",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "divide_zero",
+      "wasm_sha256": "2a0a8b9004b3c7f05e539f62493f79495aabd7fb31d861a488de8e6a9109a75f",
+      "raw_evaluation": "error",
+      "result": {
+        "evaluations": [
+          "error",
+          "error"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "divide_overflow",
+      "wasm_sha256": "33a74c18045f9a9fa812d850fe5a1e10c986f2561ce0e03ca808dfc24839aaf0",
+      "raw_evaluation": "error",
+      "result": {
+        "evaluations": [
+          "error",
+          "error"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "unreachable",
+      "wasm_sha256": "86bbf989d3b45417cd8b78d51f32cdfd836cb836973c5cdb593fcafdec7777d0",
+      "raw_evaluation": "error",
+      "result": {
+        "evaluations": [
+          "error",
+          "error"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "context_length",
+      "wasm_sha256": "4e45f509775cb8d9655bbc217161ed1f2bd7735c392fc3ab30287d304d8b3d62",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "context_first_byte",
+      "wasm_sha256": "4a5f7c55660354f4c07ff64defe29cd173fd6f767589767a95c994cef912625c",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "context_little_endian",
+      "wasm_sha256": "719aff34ff18a2bcbdfe12ef127983caa14531046b7693dd299f8688296613c5",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "oob_load",
+      "wasm_sha256": "3b15b3b3bd9f96f7e52fb7b9e01391e1d0626249c32a603a8cb7233d3b1909e8",
+      "raw_evaluation": "error",
+      "result": {
+        "evaluations": [
+          "error",
+          "error"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "oob_store",
+      "wasm_sha256": "c71d62610e4df0195210efe4e1ee5734f864c9ae28d37410dcfd012856f04541",
+      "raw_evaluation": "error",
+      "result": {
+        "evaluations": [
+          "error",
+          "error"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "grow_success",
+      "wasm_sha256": "8e8e6c48bec866c940045491c56e50c733f083bdce9bd1b612a66e6c9ef802d1",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "grow_failure",
+      "wasm_sha256": "88591a7a2e4f47d3217ce3fe132381d4541f829c7e71619dfb09b29cdbf8dcb9",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "grow_allocator",
+      "wasm_sha256": "000ed13fdcd6eabb8d237deb4d6ee43be9b40b60bc96a3668b9807a126cce882",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "bulk_fill",
+      "wasm_sha256": "77b08510159756a08bef609a365caf3aff27c92ae578dabe618f06ded9a505d1",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "bulk_copy_overlap",
+      "wasm_sha256": "9b8dd08c7afc5c53bb95075ea468311f96e5354a37bb324a0a703121bdab7e99",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "bulk_fill_oob",
+      "wasm_sha256": "9468e7cb65d1c907b94998adb236a514a51f1a7731fdb111bb8f4714931893e0",
+      "raw_evaluation": "error",
+      "result": {
+        "evaluations": [
+          "error",
+          "error"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "bulk_copy_oob",
+      "wasm_sha256": "0a2a4c64a4c5f0613e6a546fb47a456edbd768ae4afe3e62b789f6dc4f6287a0",
+      "raw_evaluation": "error",
+      "result": {
+        "evaluations": [
+          "error",
+          "error"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "passive_data",
+      "wasm_sha256": "4fd7d367f422c0187d52f78e5d4355fc25133a592be0b5b46e952ef856fbba1b",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "dropped_data_trap",
+      "wasm_sha256": "a43f06e20a84866dbf36e25de74d9be058f9fbed3dd83e155c8352be72640fb3",
+      "raw_evaluation": "error",
+      "result": {
+        "evaluations": [
+          "error",
+          "error"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "fresh_global",
+      "wasm_sha256": "5cc21c0c9ffed0923096fad9710ed4b24e70f8088063dafc92c7e58fa469b66d",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "fresh_memory",
+      "wasm_sha256": "8f220b70405c69fca4020c1dfc4ab36462840c550f3e7befd35cca96a51f4983",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "start_state",
+      "wasm_sha256": "b0dc707501401fee97b882d61c7cad9e5b4ddf907e31621d5ee67d197df0464f",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "start_trap",
+      "wasm_sha256": "7eb1692057782b39213c7c8a2931e78d252a0ea4b9992b49d0f06b6c7833bf0f",
+      "raw_evaluation": "error",
+      "result": {
+        "validation": "error"
+      }
+    },
+    {
+      "name": "allocator_state",
+      "wasm_sha256": "bdfcf65a2a7a86ec063af49e00b38653d44365acb84c2e121f53347d8b85f251",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "allocator_-1_2",
+      "wasm_sha256": "20b3a9240739268b99b7578009f36c788b478ed5f9094b97ee131452a7699512",
+      "raw_evaluation": "error",
+      "result": {
+        "evaluations": [
+          "error",
+          "error"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "allocator_65536_2",
+      "wasm_sha256": "96caecc403750b8bd92134859684a3f0de9bacb106cbf06f776812431c45a740",
+      "raw_evaluation": "error",
+      "result": {
+        "evaluations": [
+          "error",
+          "error"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "allocator_65536_0",
+      "wasm_sha256": "96caecc403750b8bd92134859684a3f0de9bacb106cbf06f776812431c45a740",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "allocator_65535_2",
+      "wasm_sha256": "f7ff61b63771c0896aff1c8f13b3a2c42c238a19b3af38392cac5dc019f109bc",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "allocator_65535_4",
+      "wasm_sha256": "f7ff61b63771c0896aff1c8f13b3a2c42c238a19b3af38392cac5dc019f109bc",
+      "raw_evaluation": "error",
+      "result": {
+        "evaluations": [
+          "error",
+          "error"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "allocator_2147483647_2",
+      "wasm_sha256": "ae34c645e48f1419dbca54d072de04fdc812d189ca4ed0f94a4fb194bbf71e04",
+      "raw_evaluation": "error",
+      "result": {
+        "evaluations": [
+          "error",
+          "error"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "allocator_trap",
+      "wasm_sha256": "76a237b9d90e80b002b81a47a259bf64a411ebc1708e4f6d7de07bcc92e98c46",
+      "raw_evaluation": "error",
+      "result": {
+        "evaluations": [
+          "error",
+          "error"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "zero_memory_empty",
+      "wasm_sha256": "1078dd822ff82b751e19c3c61d17596dfd579a299f1d203cda5678a4b30f8878",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "zero_memory_nonempty",
+      "wasm_sha256": "1078dd822ff82b751e19c3c61d17596dfd579a299f1d203cda5678a4b30f8878",
+      "raw_evaluation": "error",
+      "result": {
+        "evaluations": [
+          "error",
+          "error"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "unsupported_abi",
+      "wasm_sha256": "fccbb147fb9c752870ef91f5778582254f17232e67748fd3c4f6425667434aa2",
+      "raw_evaluation": "error",
+      "result": {
+        "validation": "error"
+      }
+    },
+    {
+      "name": "missing_entrypoint",
+      "wasm_sha256": "fccbb147fb9c752870ef91f5778582254f17232e67748fd3c4f6425667434aa2",
+      "raw_evaluation": "error",
+      "result": {
+        "validation": "error"
+      }
+    },
+    {
+      "name": "missing_memory",
+      "wasm_sha256": "e841e13a90bde23200e115220d84f9b256f9ea81a75a69412296e631e4ca746f",
+      "raw_evaluation": "error",
+      "result": {
+        "validation": "error"
+      }
+    },
+    {
+      "name": "import_rejected",
+      "wasm_sha256": "d4215480ad7ab28b771c850d6513fcc755f58e49b281efc0e52d3461c9c1b392",
+      "raw_evaluation": "error",
+      "result": {
+        "validation": "error"
+      }
+    },
+    {
+      "name": "uncalled_invalid_body",
+      "wasm_sha256": "7e6250cdfc9add2b8116c8259a5aa19da391c429c0bb5ecaba00a9742cf6d5c7",
+      "raw_evaluation": "accept",
+      "result": {
+        "validation": "error"
+      }
+    },
+    {
+      "name": "uncalled_unreachable_ref",
+      "wasm_sha256": "6544ac4b9f67dd24cf4ddce2c1585f156e8cdce1362c09295567368caad72cba",
+      "raw_evaluation": "accept",
+      "result": {
+        "validation": "error"
+      }
+    },
+    {
+      "name": "uncalled_float",
+      "wasm_sha256": "5a03f13834973649596c7ec8a41c7c36b8788f912b6c52cf783587ef2357b365",
+      "raw_evaluation": "error",
+      "result": {
+        "validation": "error"
+      }
+    },
+    {
+      "name": "indirect_ok",
+      "wasm_sha256": "5ede4588bd7ef7fa4c0eb57b0669c87280faae5cc8bdbe4da8b3eb166f539f22",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "indirect_null",
+      "wasm_sha256": "e0470008e004a79b9d652c7f4635e93724668a74c6ee5b0f3f32e554764114b8",
+      "raw_evaluation": "error",
+      "result": {
+        "evaluations": [
+          "error",
+          "error"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "indirect_signature",
+      "wasm_sha256": "7b438d1b60bd91877e88adf16bf29d415e2cafe5d77aa60a8a6b3e7a49cef6d9",
+      "raw_evaluation": "error",
+      "result": {
+        "evaluations": [
+          "error",
+          "error"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "bad_allocator_signature",
+      "wasm_sha256": "4e1deb2c4be232f573526d348016dccf137ad8c380c42185df7a6f6d21576d89",
+      "raw_evaluation": "error",
+      "result": {
+        "validation": "error"
+      }
+    },
+    {
+      "name": "bad_entry_signature",
+      "wasm_sha256": "fda63882e645f30ef7525a36d676ca8270cd54084685d454004baa93ea8f588d",
+      "raw_evaluation": "error",
+      "result": {
+        "validation": "error"
+      }
+    },
+    {
+      "name": "recursive_0_8189",
+      "wasm_sha256": "d15d45d73fea4b7cfa7e519955134773fb52c04ebb7012516f28f61dc29d0b3a",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "recursive_0_8190",
+      "wasm_sha256": "d15d45d73fea4b7cfa7e519955134773fb52c04ebb7012516f28f61dc29d0b3a",
+      "raw_evaluation": "error",
+      "result": {
+        "evaluations": [
+          "error",
+          "error"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "recursive_64_909",
+      "wasm_sha256": "47b90b1c567d9509407966bc8e18b4c1c03e9f90e482f536274df56daf54b7e1",
+      "raw_evaluation": "accept",
+      "result": {
+        "evaluations": [
+          "accept",
+          "accept"
+        ],
+        "validation": "accept"
+      }
+    },
+    {
+      "name": "recursive_64_910",
+      "wasm_sha256": "47b90b1c567d9509407966bc8e18b4c1c03e9f90e482f536274df56daf54b7e1",
+      "raw_evaluation": "error",
+      "result": {
+        "evaluations": [
+          "error",
+          "error"
+        ],
+        "validation": "accept"
+      }
+    }
+  ]
+}

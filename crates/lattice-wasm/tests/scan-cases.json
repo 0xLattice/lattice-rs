@@ -1,0 +1,192 @@
+[
+  {
+    "name": "empty",
+    "wat": "(module )",
+    "accept": true
+  },
+  {
+    "name": "integer",
+    "wat": "(module (func (param i32) (result i64) local.get 0 i32.extend8_s i64.extend_i32_u i64.const 2 i64.mul))",
+    "accept": true
+  },
+  {
+    "name": "multivalue",
+    "wat": "(module (func (result i32 i64) i32.const 1 i64.const 2))",
+    "accept": true
+  },
+  {
+    "name": "integer-block",
+    "wat": "(module (func (result i32) block (result i32) i32.const 1 end))",
+    "accept": true
+  },
+  {
+    "name": "reference-null",
+    "wat": "(module (func (result i32) ref.null func ref.is_null))",
+    "accept": true
+  },
+  {
+    "name": "reference-external",
+    "wat": "(module (func (param externref) (result i32) local.get 0 ref.is_null))",
+    "accept": true
+  },
+  {
+    "name": "typed-select",
+    "wat": "(module (func (param funcref funcref) (result funcref) local.get 0 local.get 1 i32.const 1 select (result funcref)))",
+    "accept": true
+  },
+  {
+    "name": "indirect-call",
+    "wat": "(module (type $t (func (result i32))) (table 1 funcref) (func $f (type $t) i32.const 1) (elem (i32.const 0) $f) (func (result i32) i32.const 0 call_indirect (type $t)))",
+    "accept": true
+  },
+  {
+    "name": "bulk-memory",
+    "wat": "(module (memory 1) (data $d \"abc\") (func i32.const 0 i32.const 0 i32.const 3 memory.init $d data.drop $d i32.const 3 i32.const 0 i32.const 3 memory.copy i32.const 6 i32.const 1 i32.const 3 memory.fill))",
+    "accept": true
+  },
+  {
+    "name": "grow-memory",
+    "wat": "(module (memory 1 2) (func (result i32) i32.const 1 memory.grow))",
+    "accept": true
+  },
+  {
+    "name": "integer-global",
+    "wat": "(module (global (mut i64) (i64.const 1)) (func i64.const 2 global.set 0))",
+    "accept": true
+  },
+  {
+    "name": "integer-data-offset",
+    "wat": "(module (memory 1) (data (i32.const 0) \"abc\"))",
+    "accept": true
+  },
+  {
+    "name": "float-param",
+    "wat": "(module (func (param f32)))",
+    "accept": false
+  },
+  {
+    "name": "float-result",
+    "wat": "(module (func (result f64) unreachable))",
+    "accept": false
+  },
+  {
+    "name": "float-global",
+    "wat": "(module (global f32 (f32.const 0)))",
+    "accept": false
+  },
+  {
+    "name": "float-import-global",
+    "wat": "(module (import \"x\" \"g\" (global f64)))",
+    "accept": false
+  },
+  {
+    "name": "float-local",
+    "wat": "(module (func (local f64)))",
+    "accept": false
+  },
+  {
+    "name": "vector-local",
+    "wat": "(module (func (local v128)))",
+    "accept": false
+  },
+  {
+    "name": "float-unreachable",
+    "wat": "(module (func unreachable f32.const nan drop))",
+    "accept": false
+  },
+  {
+    "name": "float-block",
+    "wat": "(module (func block (result f64) unreachable end drop))",
+    "accept": false
+  },
+  {
+    "name": "float-select",
+    "wat": "(module (func (result f32) unreachable select (result f32)))",
+    "accept": false
+  },
+  {
+    "name": "float-load",
+    "wat": "(module (memory 1) (func i32.const 0 f32.load drop))",
+    "accept": false
+  },
+  {
+    "name": "float-store",
+    "wat": "(module (memory 1) (func unreachable f64.store))",
+    "accept": false
+  },
+  {
+    "name": "float-conversion",
+    "wat": "(module (func unreachable i32.trunc_sat_f32_s drop))",
+    "accept": false
+  },
+  {
+    "name": "float-reinterpret",
+    "wat": "(module (func unreachable i64.reinterpret_f64 drop))",
+    "accept": false
+  },
+  {
+    "name": "float-arithmetic",
+    "wat": "(module (func unreachable f64.add drop))",
+    "accept": false
+  },
+  {
+    "name": "tail-call",
+    "wat": "(module (func $f return_call $f))",
+    "accept": false
+  },
+  {
+    "name": "atomic",
+    "wat": "(module (func atomic.fence))",
+    "accept": false
+  },
+  {
+    "name": "shared-memory",
+    "wat": "(module (memory 1 1 shared))",
+    "accept": false
+  },
+  {
+    "name": "memory64",
+    "wat": "(module (memory i64 1))",
+    "accept": false
+  },
+  {
+    "name": "table-get",
+    "wat": "(module (table 1 funcref) (func i32.const 0 table.get drop))",
+    "accept": false
+  },
+  {
+    "name": "table-set",
+    "wat": "(module (table 1 funcref) (func i32.const 0 ref.null func table.set))",
+    "accept": false
+  },
+  {
+    "name": "table-size",
+    "wat": "(module (table 1 funcref) (func table.size drop))",
+    "accept": false
+  },
+  {
+    "name": "table-grow",
+    "wat": "(module (table 1 funcref) (func ref.null func i32.const 1 table.grow drop))",
+    "accept": false
+  },
+  {
+    "name": "table-fill",
+    "wat": "(module (table 1 funcref) (func i32.const 0 ref.null func i32.const 1 table.fill))",
+    "accept": false
+  },
+  {
+    "name": "table-copy",
+    "wat": "(module (table 1 funcref) (func i32.const 0 i32.const 0 i32.const 1 table.copy))",
+    "accept": false
+  },
+  {
+    "name": "element-drop",
+    "wat": "(module (func $f) (elem $e func $f) (func elem.drop $e))",
+    "accept": false
+  },
+  {
+    "name": "table-init",
+    "wat": "(module (table 1 funcref) (func $f) (elem $e func $f) (func i32.const 0 i32.const 0 i32.const 1 table.init $e))",
+    "accept": false
+  }
+]

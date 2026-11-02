@@ -1,0 +1,259 @@
+{
+  "lattice_revision": "dda2d852429a27be6043599b63bde81530cd9514",
+  "wasmkit_revision": "5c389084423c08136040ab8a41f73d4e76fb7b21",
+  "scanner_sha256": "e94633cb0649a7bbcd569342f8e2764eef6a909d81802070ba1bb21e79363775",
+  "swift_version": "Apple Swift version 6.3.3 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)\nTarget: arm64-apple-macosx26.0",
+  "swift_dependencies": {
+    "originHash": "057f6cfc64c050e4b808c604217aeaa97e400089f5c772af9b65d5cfe87c7249",
+    "pins": [
+      {
+        "identity": "swift-argument-parser",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/apple/swift-argument-parser",
+        "state": {
+          "revision": "6a52f3251125d74daf04fcbd5e6f08a75d074382",
+          "version": "1.8.2"
+        }
+      },
+      {
+        "identity": "swift-atomics",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/apple/swift-atomics.git",
+        "state": {
+          "revision": "0442cb5a3f98ab802acb777929fdb446bda11a34",
+          "version": "1.3.1"
+        }
+      },
+      {
+        "identity": "swift-collections",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/apple/swift-collections.git",
+        "state": {
+          "revision": "f96b909e1a9e469620bc5037c1e24e00153f376f",
+          "version": "1.7.5"
+        }
+      },
+      {
+        "identity": "swift-log",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/apple/swift-log",
+        "state": {
+          "revision": "c9c6bb9d275ec0d95c3ad16391f3f045dc623104",
+          "version": "1.16.2"
+        }
+      },
+      {
+        "identity": "swift-nio",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/apple/swift-nio",
+        "state": {
+          "revision": "6db9d9abd92ad7399b8a564cafbb87d3507245fa",
+          "version": "2.104.0"
+        }
+      },
+      {
+        "identity": "swift-system",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/apple/swift-system",
+        "state": {
+          "revision": "669763cfd5806a67e21972d7e5e2d6b80b1ea985",
+          "version": "1.6.5"
+        }
+      }
+    ],
+    "version": 3
+  },
+  "scope": "opcode scan and parsing only; not runtime or complete module admission",
+  "cases": [
+    {
+      "name": "empty",
+      "accept": true,
+      "wasm_sha256": "93a44bbb96c751218e4c00d479e4c14358122a389acca16205b1e4d0dc5f9476"
+    },
+    {
+      "name": "integer",
+      "accept": true,
+      "wasm_sha256": "f31762e06ec0d612b614343799220516408946ddf8f4c71e9905dab11b9f0608"
+    },
+    {
+      "name": "multivalue",
+      "accept": true,
+      "wasm_sha256": "5ab73dc12f3e9b818423a0683259322fcfe621ce73e576de911a62026f8ae661"
+    },
+    {
+      "name": "integer-block",
+      "accept": true,
+      "wasm_sha256": "ff9155b63c7d4af7a2cca558181efb4a6497a68f0ba61f897269ed83f7663ba7"
+    },
+    {
+      "name": "reference-null",
+      "accept": true,
+      "wasm_sha256": "21dd38b25150541cc91f7d2b3be8e7cb66f9def3b48855746e750e2ea1b67073"
+    },
+    {
+      "name": "reference-external",
+      "accept": true,
+      "wasm_sha256": "bc94c596321a524f71679e46172bb89e41cafed16d1989bd70c182d1d098c71e"
+    },
+    {
+      "name": "typed-select",
+      "accept": true,
+      "wasm_sha256": "89eeb839f29fac280a78f217ecf18cdad52350864556047f58912dda5b9e3919"
+    },
+    {
+      "name": "indirect-call",
+      "accept": true,
+      "wasm_sha256": "ead633124cd110b293e17ca10cb11c7d2bee3a95341903a469828e9d14af20e4"
+    },
+    {
+      "name": "bulk-memory",
+      "accept": true,
+      "wasm_sha256": "b6df1501914d2724f2e03a805470e8db9f454de291270a0643b8e603a0ed8806"
+    },
+    {
+      "name": "grow-memory",
+      "accept": true,
+      "wasm_sha256": "a4d1c2bba023d3cb3f4ac83b6636ec5a5d964636ad31a2e024d7bc56055d8efd"
+    },
+    {
+      "name": "integer-global",
+      "accept": true,
+      "wasm_sha256": "1bfde6833c41f959c7888fb1dba2ded3e9ee2e52f20b0e335113234f18775c94"
+    },
+    {
+      "name": "integer-data-offset",
+      "accept": true,
+      "wasm_sha256": "0627b3f45a4844dcf78e8ef35e175b7edb03f3d836ab0f82e8f7fdc206b5f2e1"
+    },
+    {
+      "name": "float-param",
+      "accept": false,
+      "wasm_sha256": "53329ec469432b1423807bd56f9a89a93e8b894b23947f549e84c34ee91a66d7"
+    },
+    {
+      "name": "float-result",
+      "accept": false,
+      "wasm_sha256": "ca1b840bbf7df630c4cd520e5c3c589688a905d2b2d06a5a2bf90d5abf635b1e"
+    },
+    {
+      "name": "float-global",
+      "accept": false,
+      "wasm_sha256": "625bfccdc34c856d1ac1dc42a6c28ddc1e8cfed40569f9690c7016294c66e0bd"
+    },
+    {
+      "name": "float-import-global",
+      "accept": false,
+      "wasm_sha256": "c307196db83149c7a0e59741ce7de196181d23bfe88e1d3edf6057d3767bbd27"
+    },
+    {
+      "name": "float-local",
+      "accept": false,
+      "wasm_sha256": "b3cfd74d7255123e2e96c92e522d89149641835f19a80c2e085b84b180ea05e8"
+    },
+    {
+      "name": "vector-local",
+      "accept": false,
+      "wasm_sha256": "118b0a64ff73eb9b6ce2f2c634cac75490360c220587e757ab64700165e082be"
+    },
+    {
+      "name": "float-unreachable",
+      "accept": false,
+      "wasm_sha256": "026cb14e61e11c8f49a058c472347d61876765003eaaaf0f398ec13b3044596d"
+    },
+    {
+      "name": "float-block",
+      "accept": false,
+      "wasm_sha256": "d7d090852b213aff73d85b90dee756584903e3cf2149f04e0517ef529c0d21d5"
+    },
+    {
+      "name": "float-select",
+      "accept": false,
+      "wasm_sha256": "56baa760c3d0869b07d2e72955d83696d76b322490345ea5b00ab97c080cb9c2"
+    },
+    {
+      "name": "float-load",
+      "accept": false,
+      "wasm_sha256": "de28f51810fa3b804b1f67330c9fd33b0186dc6abfee69f01a1003aa67897f63"
+    },
+    {
+      "name": "float-store",
+      "accept": false,
+      "wasm_sha256": "7b94b14353fda7a614d802fcc5237d341173516ec1a4fb1522632650cf8f0836"
+    },
+    {
+      "name": "float-conversion",
+      "accept": false,
+      "wasm_sha256": "26bfb4e169126453934a62506703c2df9a1267c26abec6b918bb05fdb2d0a708"
+    },
+    {
+      "name": "float-reinterpret",
+      "accept": false,
+      "wasm_sha256": "d3fd0d5a08938fc270b3f89d47e997f636dc5cc0835a77c677339c07fa8d4332"
+    },
+    {
+      "name": "float-arithmetic",
+      "accept": false,
+      "wasm_sha256": "b49172640cc2b8dddce00a5ebb965fd7e965edc7d5e740453f2a010785dba480"
+    },
+    {
+      "name": "tail-call",
+      "accept": false,
+      "wasm_sha256": "517e3da94d08bd3dbb624b834c170f7fa66748a6cf709538e47b145ff744e39a"
+    },
+    {
+      "name": "atomic",
+      "accept": false,
+      "wasm_sha256": "03d3eb85acf43c753fa908ae8f4548eb430dca92fbed07643dd653787b0728c9"
+    },
+    {
+      "name": "shared-memory",
+      "accept": false,
+      "wasm_sha256": "16803d186a986a899b6ba3707c5f5cedcc1c8d16b0a785a29034b011874f61c5"
+    },
+    {
+      "name": "memory64",
+      "accept": false,
+      "wasm_sha256": "b82640469af936e6398593315e22180f82e789bef30f5d8a18a76b38ae464504"
+    },
+    {
+      "name": "table-get",
+      "accept": false,
+      "wasm_sha256": "4e7bf6f2178a887d2ce7057924cffcfb2ce974e5373dd2e3275289dcd3cc5eb8"
+    },
+    {
+      "name": "table-set",
+      "accept": false,
+      "wasm_sha256": "86ac8feb1d8e87fe8cfb8dded82a07725a3de25a55b8e613e65c3e0253a4aa76"
+    },
+    {
+      "name": "table-size",
+      "accept": false,
+      "wasm_sha256": "633b3ace42d81618e20eb26e344b285a90f0ca1841327fac8dc9c05a278eec36"
+    },
+    {
+      "name": "table-grow",
+      "accept": false,
+      "wasm_sha256": "c56d1a0587cc5426ee6bac3c66e6f4a1033e98d84771ea0134a6958d0b02d86b"
+    },
+    {
+      "name": "table-fill",
+      "accept": false,
+      "wasm_sha256": "7840d65ddc88696a52c738864b3735839f6dd8f997600baa34e87d21df03b14c"
+    },
+    {
+      "name": "table-copy",
+      "accept": false,
+      "wasm_sha256": "05be3a60960bc3e1e24fc04cf091da37e32410f85f19177946bec28d56679d36"
+    },
+    {
+      "name": "element-drop",
+      "accept": false,
+      "wasm_sha256": "72da24cb167687ce6f1942e19d2c71de04747c4985dc606d703f9215476ee163"
+    },
+    {
+      "name": "table-init",
+      "accept": false,
+      "wasm_sha256": "87c51fb7a5229de26e3741cd295147982b7943a8dad36ba37773ea6fd53604c2"
+    }
+  ]
+}

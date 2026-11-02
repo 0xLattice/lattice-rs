@@ -1,0 +1,18 @@
+{
+  "encoding_boundaries": {
+    "encoding-nonce-1208925819614629174706176": "rejected",
+    "encoding-nonce-18446744073709551615": "encoded",
+    "encoding-nonce-18446744073709551616": "rejected",
+    "encoding-nonce-340282366920938463463374607431768211455": "rejected"
+  },
+  "revision": "dda2d852429a27be6043599b63bde81530cd9514",
+  "cases": 51,
+  "package_resolved_sha256": "958f69bd3ec734a372e8cd94e3d09d593674a1025979a2abe2b45a6f08cfc9a6",
+  "fixture_sha256": "c647082d6b7687581eabee0f303a5f498099386140a588173ec701ee9b92718c",
+  "source_sha256": {
+    "Lattice/Sources/LatticeImport/TransactionPreflight.swift": "682adc1f9adbc22d0e29232397a0fe8af3805c68dbd06f735a12aef11840da79",
+    "lattice-rs/crates/lattice-validation/tests/preflight-oracle.swift": "ecaced333e59cf1f39ffaa80f90609aa21486f315743870c798c460e59080336",
+    "lattice-rs/crates/lattice-validation/examples/preflight_samples.rs": "31707eee64b0b59525549ea61f68f84da2671e0a6360a879d0f3b35199693f88"
+  },
+  "provenance_path_format": "repository-relative; metadata-only normalization, source hashes and observations unchanged"
+}

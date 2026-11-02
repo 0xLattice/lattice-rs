@@ -1,0 +1,17 @@
+[package]
+name = "lattice-block-tree"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+publish = false
+[dependencies]
+lattice-primitives = {path = "../lattice-primitives"}
+lattice-pow = {path = "../lattice-pow"}
+serde = {version = "1", features = ["derive"]}
+serde_json = "1"
+thiserror = "2"
+num-bigint = "0.4"
+cid = "0.11"
+lattice-cashew = {path = "../../../cashew-rs"}
+lattice-validation = {path = "../lattice-validation"}
+base64 = "0.22"

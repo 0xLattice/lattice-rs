@@ -1,0 +1,146 @@
+[
+  {
+    "bodyCID" : "bafy-test-body",
+    "nonce" : "0",
+    "path" : [
+      "Nexus"
+    ],
+    "preimage" : "domain:13:lattice-tx-v1\nchainPath.count:1\nchainPath.component:5:Nexus\nnonce:0\nbodyCID:14:bafy-test-body",
+    "privateKey" : "0101010101010101010101010101010101010101010101010101010101010101",
+    "publicKey" : "ed018a88e3dd7409f195fd52db2d3cba5d72ca6709bf1d94121bf3748801b40f6f5c",
+    "signature" : "1700c3fbc7501e6ce3fdb9df7cea368573852fc7e9f84c11a5ed45c0b6eeb4325fe82a4199cf7f189bedcb77c5d943a33d1d92611767b4d5eb6e2cd77dccbd0b"
+  },
+  {
+    "bodyCID" : "bafy-test-body",
+    "nonce" : "1",
+    "path" : [
+      "Nexus"
+    ],
+    "preimage" : "domain:13:lattice-tx-v1\nchainPath.count:1\nchainPath.component:5:Nexus\nnonce:1\nbodyCID:14:bafy-test-body",
+    "privateKey" : "0101010101010101010101010101010101010101010101010101010101010101",
+    "publicKey" : "ed018a88e3dd7409f195fd52db2d3cba5d72ca6709bf1d94121bf3748801b40f6f5c",
+    "signature" : "335f6739777493be0bf00bf1149d4165ca5bced8148df38ce3c1ba7e6059e03e49ec1079de1606066ac6f22ce51d0830b87d881b927095132e5e17589037420a"
+  },
+  {
+    "bodyCID" : "bafy-test-body",
+    "nonce" : "18446744073709551615",
+    "path" : [
+      "Nexus"
+    ],
+    "preimage" : "domain:13:lattice-tx-v1\nchainPath.count:1\nchainPath.component:5:Nexus\nnonce:18446744073709551615\nbodyCID:14:bafy-test-body",
+    "privateKey" : "0101010101010101010101010101010101010101010101010101010101010101",
+    "publicKey" : "ed018a88e3dd7409f195fd52db2d3cba5d72ca6709bf1d94121bf3748801b40f6f5c",
+    "signature" : "767391ac434d7db5a3a3eb72c5a538bc8e32bd16d11b44feacaec60d4a51e0a5efdcb1f32bdb45e57e4a2918f869c134973888e8da82c325eaa626d659e90806"
+  },
+  {
+    "bodyCID" : "bafy-test-body",
+    "nonce" : "0",
+    "path" : [
+      "Nexus",
+      "Payments"
+    ],
+    "preimage" : "domain:13:lattice-tx-v1\nchainPath.count:2\nchainPath.component:5:Nexus\nchainPath.component:8:Payments\nnonce:0\nbodyCID:14:bafy-test-body",
+    "privateKey" : "0101010101010101010101010101010101010101010101010101010101010101",
+    "publicKey" : "ed018a88e3dd7409f195fd52db2d3cba5d72ca6709bf1d94121bf3748801b40f6f5c",
+    "signature" : "ba919babecbb4fea095837aa0fe2bae7b3f90188b98a41148a45687ba2532a4f8157fd2db731018336f8550dae8864d3b3e5bdfeb360ba1ee35c3429a25aa104"
+  },
+  {
+    "bodyCID" : "bafy-test-body",
+    "nonce" : "1",
+    "path" : [
+      "Nexus",
+      "Payments"
+    ],
+    "preimage" : "domain:13:lattice-tx-v1\nchainPath.count:2\nchainPath.component:5:Nexus\nchainPath.component:8:Payments\nnonce:1\nbodyCID:14:bafy-test-body",
+    "privateKey" : "0101010101010101010101010101010101010101010101010101010101010101",
+    "publicKey" : "ed018a88e3dd7409f195fd52db2d3cba5d72ca6709bf1d94121bf3748801b40f6f5c",
+    "signature" : "b2ce35b267ed8a0ee48cacfe36d6299caf2d46b5832228a3e5be9c973796a2b6b4afae30f0e2326a1ec8ed4a8cdfb840861479bb41eae4ef41deeefeff8a0f0e"
+  },
+  {
+    "bodyCID" : "bafy-test-body",
+    "nonce" : "18446744073709551615",
+    "path" : [
+      "Nexus",
+      "Payments"
+    ],
+    "preimage" : "domain:13:lattice-tx-v1\nchainPath.count:2\nchainPath.component:5:Nexus\nchainPath.component:8:Payments\nnonce:18446744073709551615\nbodyCID:14:bafy-test-body",
+    "privateKey" : "0101010101010101010101010101010101010101010101010101010101010101",
+    "publicKey" : "ed018a88e3dd7409f195fd52db2d3cba5d72ca6709bf1d94121bf3748801b40f6f5c",
+    "signature" : "f1be15bd518aaefe78fee47d7db57d689b762827d84f90749395f2ed5a1574a9e6cf00ddafd48ba713739831eb2005d720af1d36db639a805d0f98f58290540b"
+  },
+  {
+    "bodyCID" : "bafy-test-body",
+    "nonce" : "0",
+    "path" : [
+      "Nexus",
+      "é",
+      "支付"
+    ],
+    "preimage" : "domain:13:lattice-tx-v1\nchainPath.count:3\nchainPath.component:5:Nexus\nchainPath.component:2:é\nchainPath.component:6:支付\nnonce:0\nbodyCID:14:bafy-test-body",
+    "privateKey" : "0101010101010101010101010101010101010101010101010101010101010101",
+    "publicKey" : "ed018a88e3dd7409f195fd52db2d3cba5d72ca6709bf1d94121bf3748801b40f6f5c",
+    "signature" : "49aa732d94072ec87993eb04f99271eddf37555cbdff3b5e15cd841b125bcd54be176ca918e475ed3b020a7f472d62e51448ac0d9d9c56e1f06c44c480d63f08"
+  },
+  {
+    "bodyCID" : "bafy-test-body",
+    "nonce" : "1",
+    "path" : [
+      "Nexus",
+      "é",
+      "支付"
+    ],
+    "preimage" : "domain:13:lattice-tx-v1\nchainPath.count:3\nchainPath.component:5:Nexus\nchainPath.component:2:é\nchainPath.component:6:支付\nnonce:1\nbodyCID:14:bafy-test-body",
+    "privateKey" : "0101010101010101010101010101010101010101010101010101010101010101",
+    "publicKey" : "ed018a88e3dd7409f195fd52db2d3cba5d72ca6709bf1d94121bf3748801b40f6f5c",
+    "signature" : "eaf1f71a5f20e05ffb41325115d667744833b3cdc6ad11bed266815061159e9e2e9ff8aa4756ab50eb54925d3eb1aa5bbc21d351c0944c4fa38a86d7af1b3f0b"
+  },
+  {
+    "bodyCID" : "bafy-test-body",
+    "nonce" : "18446744073709551615",
+    "path" : [
+      "Nexus",
+      "é",
+      "支付"
+    ],
+    "preimage" : "domain:13:lattice-tx-v1\nchainPath.count:3\nchainPath.component:5:Nexus\nchainPath.component:2:é\nchainPath.component:6:支付\nnonce:18446744073709551615\nbodyCID:14:bafy-test-body",
+    "privateKey" : "0101010101010101010101010101010101010101010101010101010101010101",
+    "publicKey" : "ed018a88e3dd7409f195fd52db2d3cba5d72ca6709bf1d94121bf3748801b40f6f5c",
+    "signature" : "5edae263d4f626bf4f4907bb3c35d328ef5cb8bcbb88b02df62969094cfd0d3ef1364df7efc1831a9706a81c6d934755d4aaaae15c51ff27d224419c2f504c08"
+  },
+  {
+    "bodyCID" : "bafy-test-body",
+    "nonce" : "0",
+    "path" : [
+      "Nexus",
+      "a\nb:c"
+    ],
+    "preimage" : "domain:13:lattice-tx-v1\nchainPath.count:2\nchainPath.component:5:Nexus\nchainPath.component:5:a\nb:c\nnonce:0\nbodyCID:14:bafy-test-body",
+    "privateKey" : "0101010101010101010101010101010101010101010101010101010101010101",
+    "publicKey" : "ed018a88e3dd7409f195fd52db2d3cba5d72ca6709bf1d94121bf3748801b40f6f5c",
+    "signature" : "65d9c3250c00f14127a082b45f1571b8d069c289453d8de1432afc6e8b492644cedad5b422c6b5e56d62e0c2a435195b92ba7bd0053136b4e7dd2737fdd93107"
+  },
+  {
+    "bodyCID" : "bafy-test-body",
+    "nonce" : "1",
+    "path" : [
+      "Nexus",
+      "a\nb:c"
+    ],
+    "preimage" : "domain:13:lattice-tx-v1\nchainPath.count:2\nchainPath.component:5:Nexus\nchainPath.component:5:a\nb:c\nnonce:1\nbodyCID:14:bafy-test-body",
+    "privateKey" : "0101010101010101010101010101010101010101010101010101010101010101",
+    "publicKey" : "ed018a88e3dd7409f195fd52db2d3cba5d72ca6709bf1d94121bf3748801b40f6f5c",
+    "signature" : "43e899e7ac68c4f86e5b310de925e8292e5be278f79bdb104e672b6c8898469e4bcc69c91b14d181db72be95f6334f89ef7a979f029b604faa147b3ae18f860b"
+  },
+  {
+    "bodyCID" : "bafy-test-body",
+    "nonce" : "18446744073709551615",
+    "path" : [
+      "Nexus",
+      "a\nb:c"
+    ],
+    "preimage" : "domain:13:lattice-tx-v1\nchainPath.count:2\nchainPath.component:5:Nexus\nchainPath.component:5:a\nb:c\nnonce:18446744073709551615\nbodyCID:14:bafy-test-body",
+    "privateKey" : "0101010101010101010101010101010101010101010101010101010101010101",
+    "publicKey" : "ed018a88e3dd7409f195fd52db2d3cba5d72ca6709bf1d94121bf3748801b40f6f5c",
+    "signature" : "e63e2063d6d0360dc70e208c9e79c83e41860c46b07d3555926f3e81c8e38d9eb8034906a1e04c831a30aae27e42996a8c2c4eacf9760ce07b69c36cad2cbb0d"
+  }
+]

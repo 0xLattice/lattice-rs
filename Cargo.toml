@@ -1,0 +1,3 @@
+[workspace]
+resolver = "2"
+members = ["crates/lattice-pow", "crates/lattice-primitives", "crates/lattice-validation", "crates/lattice-block-tree", "crates/lattice-wasm"]

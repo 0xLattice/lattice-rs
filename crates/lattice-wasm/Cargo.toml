@@ -1,0 +1,15 @@
+[package]
+name = "lattice-wasm"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+
+[dependencies]
+wasmparser = { version = "=0.263.0", default-features = false, features = ["std", "validate", "features", "prefer-btree-collections"] }
+thiserror = "2"
+wasm-encoder = { version = "=0.263.0", features = ["wasmparser"] }
+wasmi = { version = "=2.0.0", default-features = false, features = ["std", "validate", "portable-dispatch", "prefer-btree-collections"] }
+
+[dev-dependencies]
+wat = "=1.263.0"
+serde_json = "1"

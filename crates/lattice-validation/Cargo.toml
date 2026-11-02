@@ -1,0 +1,18 @@
+[package]
+name = "lattice-validation"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+
+[dependencies]
+lattice-pow = { path = "../lattice-pow" }
+lattice-wasm = { path = "../lattice-wasm" }
+lattice-primitives = { path = "../lattice-primitives" }
+lattice-cashew = { path = "../../../cashew-rs" }
+num-bigint = "0.4"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+
+[dev-dependencies]
+wat = "=1.263.0"
