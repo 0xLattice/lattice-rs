@@ -72,8 +72,8 @@ remaining implementation gaps and narrower verification evidence.
 
 The platform workflow now bootstraps these exact siblings and checks all 17
 repositories on Linux, macOS and Windows. Public source fetches require no cross-repository credential; actual green
-remote runs remain required before claiming platform CI coverage. Existing standalone Ivy
-CI still does not provide its sibling Tally dependency. See [BOOTSTRAP.md](BOOTSTRAP.md).
+remote runs remain required before claiming platform CI coverage. Standalone Ivy CI now checks out its exact Tally dependency and runs native,
+WASM and locked Swift TCP interoperability checks; remote results remain separate evidence. See [BOOTSTRAP.md](BOOTSTRAP.md).
 
 ## Exporting exact local source inputs
 
@@ -128,8 +128,8 @@ Only four of the 17 local repositories currently have GitHub workflows:
 `multikey-rs`, `ivy-rs`, `lattice-rs` and `lattice-miner-gpu`. Multikey and the GPU
 worker have self-contained Cargo dependency layouts; their existing workflows
 still need results against the final revisions. The Lattice workflow now provides a central all-17-repository matrix using exact
-sibling pins and the current tested revision. Green remote results remain required. The standalone Ivy workflow still checks
-out only itself. The other repositories are covered by the central manifest
+sibling pins and the current tested revision. Green remote results remain required. The standalone Ivy workflow now supplies its exact Tally sibling and exercises
+WASM compilation and locked Swift interoperability in addition to native tests. The other repositories are covered by the central manifest
 job once operational; standalone per-repository jobs remain to be added.
 
 The published revision manifest now supplies actual source pins. CI still needs

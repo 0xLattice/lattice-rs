@@ -111,7 +111,10 @@ class CiTests(unittest.TestCase):
         self.assertFalse(checks.check(manifest, self.sources, self.base / "target", report))
         result = json.loads(report.read_text())
         self.assertFalse(result["passed"])
-        self.assertEqual(result["checks"], [{"repository": "array-trie-rs", "check": "format", "passed": False}])
+        self.assertEqual(result["checks"][0], {"repository": "array-trie-rs", "check": "format", "passed": False})
+        self.assertEqual(len(result["checks"]), 49)
+        self.assertTrue(all(item["passed"] for item in result["checks"][1:]))
+        self.assertEqual(result["checks"][-1]["repository"], "lattice-ctl-rs")
 
 
 if __name__ == "__main__":

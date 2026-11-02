@@ -43,14 +43,16 @@ def check(manifest, sources, target, report):
                 result["checks"].append({"repository": name, "check": label, "passed": completed.returncode == 0})
                 save()
                 if completed.returncode:
-                    return False
+                    # Keep checking independent repositories so one platform
+                    # failure cannot hide the remaining compatibility gaps.
+                    break
         # Tests may write ignored diagnostics, but no tracked source/lock edits.
         for row in rows:
             dirty = bootstrap.command(["git", "status", "--porcelain=v1", "--untracked-files=no"], sources / row["directory"], row["directory"] + ": post-test source inspection")
             bootstrap.require(not dirty, row["directory"] + ": build changed tracked source")
-        result["passed"] = True
+        result["passed"] = len(result["checks"]) == len(rows) * len(commands) and all(item["passed"] for item in result["checks"])
         save()
-    return True
+    return result["passed"]
 
 
 def main():

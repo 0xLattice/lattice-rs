@@ -87,7 +87,9 @@ and run formatting, strict all-target Clippy, and native all-target tests in all
 17 repositories. `platform-ci-manifest.py` replaces only the workflow repository's
 pin with the actual checked-out commit, so a new change cannot silently test the
 older checkpoint instead. Sibling pins remain exact; reports record the full set.
-Tracked edits, a foreign origin and a source subdirectory are rejected.
+Tracked edits, a foreign origin and a source subdirectory are rejected. A failed
+repository does not prevent checks of the remaining independent repositories;
+the overall result still fails if any required check fails.
 
 All 17 platform source repositories are public, so the workflow fetches exact
 commits without a cross-repository credential. Checkout credentials are not
