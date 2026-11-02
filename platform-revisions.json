@@ -35,7 +35,7 @@
     {
       "directory": "lattice-rs",
       "repository": "0xLattice/lattice-rs",
-      "commit": "9cfd386c515a960814643e9119b6e943b0943dca"
+      "commit": "432b67f06a772373f0431517497378191b165ba1"
     },
     {
       "directory": "lattice-sdk-rs",
@@ -50,7 +50,7 @@
     {
       "directory": "lattice-miner-gpu",
       "repository": "0xLattice/lattice-miner-gpu",
-      "commit": "cddbe48dc3ceddef899b0df72142767b2342642a"
+      "commit": "802f018c493480e5c8a29f57ad5a6b6913735c8a"
     },
     {
       "directory": "lattice-mining-rs",
@@ -75,7 +75,7 @@
     {
       "directory": "lattice-ctl-rs",
       "repository": "0xLattice/lattice-ctl-rs",
-      "commit": "aff33908ac150fc7fd4980d5243f39e7c204deb2"
+      "commit": "853c7d17d18dc960d6f4959b5611cc8cd614e88f"
     },
     {
       "directory": "ivy-rs",
@@ -85,7 +85,7 @@
     {
       "directory": "lattice-node-rs",
       "repository": "0xLattice/lattice-node-rs",
-      "commit": "b5146468bbe468a94331681b66e11b6611f26aad"
+      "commit": "26d69fba1b9ee83e98b387bb245a075095d130e2"
     }
   ]
 }
