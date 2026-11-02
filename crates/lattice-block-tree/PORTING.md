@@ -29,9 +29,10 @@ only: it cannot mint verified facts and does not replace PoW, execution or polic
 Remaining: full authenticated execution/genesis/connect tier,
 complete execution-frontier verdict APIs, Swift differential graph traces, exhaustive
 malformed replay cases, and source performance behavior. The current Rust graph
-uses adjacency traversal for subtree weights and ancestors; it does not implement
-Swift's EulerWorkIndex logarithmic updates. Large-chain performance parity is not
-claimed. Child restore must use `restore_with_parent` after restoring and serving
+now uses an AVL Euler index for subtree weights, routed membership and batched
+ancestor enclosure. Producer discovery/anchoring still walks the graph, and
+canonical projection plus authenticated preparation still have whole-graph/path
+costs. Large-chain end-to-end performance parity is not claimed. Child restore must use `restore_with_parent` after restoring and serving
 the parent, so derived work precedes final revision-floor sealing.
 
 ChildBlockProof now includes exact binary serialization/deserialization, sealed
@@ -68,3 +69,43 @@ producers, path mismatch, forged equal anchors and empty child-genesis anchors.
 Child execution preparation composes these with the distinct composed child
 validator capabilities and sealed securing-work evidence, comparing all path,
 block, predecessor, state and difficulty-anchor bindings.
+
+
+## Euler work index
+
+`euler.rs` follows pinned Swift `EulerWorkIndex.swift`: stable block handles name
+OPEN/CLOSE nodes, OPEN reads the single direct-work table, and subtree totals
+are exact prefix differences. Leaf insertion and direct-work changes touch AVL
+paths rather than chain ancestors. Disconnected components are toured and
+spliced once when their parent becomes routed. Exclusion never deletes index
+entries or subtracts work; it changes selection only. Unary canonical descent
+avoids weight queries. Recovery builds a balanced index directly from the final
+routed forest rather than replaying every rotation.
+
+Rust uses `usize` handles and `BigUint` sums, rather than Swift's UInt32 links and
+inline 320-bit/spilled representation. It adds no fixed numeric work ceiling.
+Malformed splice forests are checked entirely before mutation, including
+out-of-domain handles. These are internal derived structures, not persisted
+facts or new network authority.
+
+`python3 tools/generate-euler-vectors.py` compiles the unchanged pinned Swift
+Euler source and checks that the linked WorkSum/FixedWidthWork arithmetic files
+are byte-identical to the pin. It exports 330 deterministic observations covering
+multiple roots, middle leaf insertions, orphan forests, strongest updates,
+malformed splice refusal, bulk rebuilds, sums beyond 320 bits, single/batched
+enclosure, full tour order and exact sequence-tree visit counts. Rust consumes
+that fixture in `euler::tests::unchanged_pinned_swift_differential`. Separate
+invariant tests check AVL balance, heights, parent links and aggregate values;
+depth 200/400/800 counters assert logarithmic index work without wall-clock
+thresholds. An independent adjacency graph oracle checks live grafting, work
+upgrades, exclusions, canonical CID tie-breaking and shuffled durable recovery.
+
+Limits: index mutation/query work is logarithmic in sequence size, not necessarily
+in bit complexity of arbitrary-size sums. Graph metadata remains in string-keyed
+maps; tours and canonical projection retain lookup/allocation costs. Producer
+lookup and anchored-status checks remain scans/walks. `prepare_batches` still
+clones the entire graph twice and compares whole basis structures, so this slice
+does not make authenticated admission logarithmic. The index's linear recovery
+builder does not make the entire journal replay and graph materialization linear.
+Existing node recovery/formal traces test consensus observations separately;
+this data-structure oracle is not a formal proof of the implementation.

@@ -475,3 +475,144 @@ fn child_template_tip_uses_parent_side_branches_and_executed_fallback() {
             .is_none()
     );
 }
+
+/// Independent adjacency oracle retains the pre-index semantics, including
+/// unrouted orphans, exact weights, exclusions, and CID-byte tie breaks.
+#[test]
+fn indexed_live_grafts_and_recovery_match_adjacency() {
+    use num_bigint::BigUint;
+    fn routed(tree: &ChainTree, hash: &str) -> bool {
+        let mut at = hash.to_owned();
+        let mut seen = BTreeSet::new();
+        loop {
+            if !seen.insert(at.clone()) {
+                return false;
+            }
+            let Some(meta) = tree.consensus_block(&at) else {
+                return false;
+            };
+            match meta.parent_block_hash {
+                None => return meta.block_height == 0,
+                Some(parent) => {
+                    if !tree.children(&parent).contains(&at) {
+                        return false;
+                    }
+                    at = parent;
+                }
+            }
+        }
+    }
+    fn weight(tree: &ChainTree, hash: &str) -> Option<BigUint> {
+        if !routed(tree, hash) {
+            return None;
+        }
+        let mut stack = vec![hash.to_owned()];
+        let mut total = BigUint::default();
+        while let Some(h) = stack.pop() {
+            total += BigUint::parse_bytes(
+                tree.consensus_block(&h).unwrap().work.to_hex().as_bytes(),
+                16,
+            )
+            .unwrap();
+            stack.extend(tree.children(&h));
+        }
+        Some(total)
+    }
+    fn preferred(tree: &ChainTree, candidates: Vec<String>) -> Option<String> {
+        let mut best: Option<(String, BigUint)> = None;
+        for h in candidates {
+            if tree.is_excluded_root(&h) {
+                continue;
+            }
+            let Some(w) = weight(tree, &h) else {
+                continue;
+            };
+            if best
+                .as_ref()
+                .is_none_or(|(b, bw)| w > *bw || (w == *bw && fork_choice_prefers_block(&h, b)))
+            {
+                best = Some((h, w));
+            }
+        }
+        best.map(|(h, _)| h)
+    }
+    fn check(tree: &ChainTree, names: &[String]) {
+        for h in names {
+            assert_eq!(
+                tree.subtree_work(h)
+                    .map(|w| BigUint::parse_bytes(w.to_hex().as_bytes(), 16).unwrap()),
+                weight(tree, h),
+                "{h}"
+            );
+        }
+        let mut path = vec![];
+        let mut next = preferred(tree, tree.genesis_roots());
+        while let Some(h) = next {
+            next = preferred(tree, tree.children(&h));
+            path.push(h);
+        }
+        assert_eq!(tree.canonical_path(), path);
+    }
+    let mut tree = ChainTree::empty(context("g"));
+    let mut batches = vec![batch("g", None, 0, 1, true)];
+    tree.apply_staged(&batches[0]).unwrap();
+    let names: Vec<String> = (0..96).map(|h| format!("indexed-{h}")).collect();
+    let mut parents = vec![];
+    let mut heights = vec![];
+    for h in 0..96 {
+        let parent = if h == 0 {
+            None
+        } else {
+            Some(if h < 32 { h - 1 } else { (h * 37 + 11) % h })
+        };
+        heights.push(parent.map_or(1, |p| heights[p] + 1));
+        parents.push(parent);
+    }
+    let hashes: Vec<_> = std::iter::once(cid("g"))
+        .chain(names.iter().map(|n| cid(n)))
+        .collect();
+    // Descendants arrive first, then several disconnected components graft.
+    let order: Vec<_> = (0..96)
+        .filter(|h| h % 3 == 0)
+        .rev()
+        .chain((0..96).filter(|h| h % 3 != 0).rev())
+        .collect();
+    for h in order {
+        let parent = parents[h].map(|p| names[p].as_str()).unwrap_or("g");
+        let b = batch(
+            &names[h],
+            Some(parent),
+            heights[h],
+            (h % 7 + 1) as u64,
+            false,
+        );
+        tree.apply_staged(&b).unwrap();
+        batches.push(b);
+        check(&tree, &hashes);
+    }
+    for h in (0..96).step_by(7) {
+        let parent = parents[h].map(|p| names[p].as_str()).unwrap_or("g");
+        let b = batch(&names[h], Some(parent), heights[h], 100 + h as u64, false);
+        tree.apply_staged(&b).unwrap();
+        batches.push(b);
+        check(&tree, &hashes);
+    }
+    for h in [10, 40, 65] {
+        let b = exclude(&names[h]);
+        tree.apply_staged(&b).unwrap();
+        batches.push(b);
+        check(&tree, &hashes);
+    }
+    for shift in [0, 1, 27, 83] {
+        let mut reordered = batches.clone();
+        reordered.rotate_left(shift);
+        reordered.reverse();
+        let recovered =
+            ChainTree::restore(&reordered, tree.current_revision(), context("g")).unwrap();
+        check(&recovered, &hashes);
+        assert_eq!(tree.canonical_path(), recovered.canonical_path());
+        for h in &hashes {
+            assert_eq!(tree.subtree_work(h), recovered.subtree_work(h));
+        }
+    }
+}

@@ -1,5 +1,6 @@
 //! Consensus fact reducer and exact-work block graph.
 //! Durable replay accepts locally authenticated persisted facts, never untrusted wire claims.
+mod euler;
 mod facts;
 pub use facts::*;
 

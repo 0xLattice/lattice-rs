@@ -1,3 +1,4 @@
+use crate::euler::{EulerWorkIndex, Event};
 use crate::*;
 use lattice_pow::{Target, WorkSum};
 use lattice_primitives::{ChainRuntimeContext, UInt256};
@@ -81,7 +82,7 @@ struct Node {
     linked: bool,
     validated: bool,
     excluded: bool,
-    direct: BigUint,
+    handle: usize,
 }
 #[derive(Debug, Clone, PartialEq, Eq)]
 struct Grind {
@@ -97,6 +98,8 @@ pub struct ChainTree {
     blocks: BTreeMap<String, Node>,
     children: BTreeMap<String, BTreeSet<String>>,
     grinds: BTreeMap<String, Grind>,
+    direct_work: Vec<BigUint>,
+    weights: EulerWorkIndex,
     canonical: Vec<String>,
     revision: u64,
     reserved: u64,
@@ -238,6 +241,8 @@ impl ChainTree {
             blocks: BTreeMap::new(),
             children: BTreeMap::new(),
             grinds: BTreeMap::new(),
+            direct_work: vec![],
+            weights: EulerWorkIndex::default(),
             canonical: vec![],
             revision: 0,
             reserved: 0,
@@ -319,24 +324,77 @@ impl ChainTree {
         self.reserved -= 1;
     }
     fn routed(&self, hash: &str) -> bool {
-        let mut at = hash;
+        self.blocks
+            .get(hash)
+            .is_some_and(|n| self.weights.contains(n.handle))
+    }
+    /// Tour only the newly connected component; never walk unrelated history.
+    fn tour(&self, root: &str, unrouted_only: bool) -> Vec<Event> {
+        let mut events = vec![];
+        let mut stack = vec![(root.to_owned(), false)];
         let mut seen = BTreeSet::new();
-        loop {
-            if !seen.insert(at) {
-                return false;
+        while let Some((hash, close)) = stack.pop() {
+            let handle = self.blocks[&hash].handle;
+            if close {
+                events.push(Event::Close(handle));
+                continue;
             }
-            let Some(n) = self.blocks.get(at) else {
-                return false;
-            };
-            if let Some(parent) = n.fact.parent_block_hash.as_deref() {
-                if !n.linked {
-                    return false;
-                }
-                at = parent;
-            } else {
-                return n.fact.block_height == 0;
+            if (unrouted_only && self.weights.contains(handle)) || !seen.insert(hash.clone()) {
+                continue;
             }
+            events.push(Event::Open(handle));
+            stack.push((hash.clone(), true));
+            stack.extend(self.children(&hash).into_iter().rev().map(|c| (c, false)));
         }
+        events
+    }
+    fn route_component(&mut self, hash: &str) {
+        let node = &self.blocks[hash];
+        let handle = node.handle;
+        if self.weights.contains(handle) {
+            self.weights.changed(handle, &self.direct_work);
+            return;
+        }
+        let parent = match node.fact.parent_block_hash.as_deref() {
+            Some(p) if node.linked && self.routed(p) => Some(self.blocks[p].handle),
+            None if node.fact.block_height == 0 => None,
+            _ => return,
+        };
+        if self.children(hash).is_empty() {
+            if let Some(parent) = parent {
+                assert!(
+                    self.weights
+                        .insert_leaf(handle, parent, &self.direct_work)
+                        .is_some()
+                );
+            } else {
+                assert!(self.weights.insert_root(handle, &self.direct_work));
+            }
+            return;
+        }
+        let events = self.tour(hash, true);
+        if let Some(parent) = parent {
+            assert!(
+                self.weights
+                    .splice(&events, parent, &self.direct_work)
+                    .is_some()
+            );
+        } else {
+            assert!(self.weights.insert_root(handle, &self.direct_work));
+            assert!(
+                self.weights
+                    .splice(&events[1..events.len() - 1], handle, &self.direct_work)
+                    .is_some()
+            );
+        }
+    }
+    fn rebuild_weights(&mut self) {
+        let events: Vec<_> = self
+            .genesis_roots()
+            .into_iter()
+            .flat_map(|h| self.tour(&h, false))
+            .collect();
+        self.weights = EulerWorkIndex::build(&events, &self.direct_work);
     }
     fn subtree(&self, root: &str) -> Vec<String> {
         let mut result = vec![];
@@ -352,15 +410,8 @@ impl ChainTree {
         result
     }
     fn weight(&self, root: &str) -> Option<BigUint> {
-        if !self.routed(root) {
-            return None;
-        }
-        Some(
-            self.subtree(root)
-                .iter()
-                .map(|h| self.blocks[h].direct.clone())
-                .sum(),
-        )
+        self.weights
+            .weight(self.blocks.get(root)?.handle, &self.direct_work)
     }
     fn preferred(&self, candidates: impl IntoIterator<Item = String>) -> Option<String> {
         let mut best: Option<(String, BigUint)> = None;
@@ -381,17 +432,22 @@ impl ChainTree {
             return path;
         }
         loop {
-            let current = path.last().unwrap();
-            let Some(next) = self.preferred(
-                self.children(current)
-                    .into_iter()
-                    .filter(|h| !self.is_excluded_root(h)),
-            ) else {
+            let children: Vec<_> = self
+                .children(path.last().unwrap())
+                .into_iter()
+                .filter(|h| !self.is_excluded_root(h))
+                .collect();
+            let next = if children.len() == 1 {
+                children.into_iter().next()
+            } else {
+                self.preferred(children)
+            };
+            let Some(next) = next else {
                 break;
             };
-            if path.contains(&next) {
-                break;
-            }
+            // Routed graph edges form a tree. A cycle is an internal invariant
+            // failure, not a reason to silently choose a partial canonical path.
+            assert!(path.len() < self.blocks.len(), "cycle in routed graph");
             path.push(next);
         }
         path
@@ -537,6 +593,8 @@ impl ChainTree {
                     .parent_block_hash
                     .as_ref()
                     .is_none_or(|p| self.blocks.contains_key(p));
+                let handle = self.direct_work.len();
+                self.direct_work.push(BigUint::default());
                 self.blocks.insert(
                     hash.clone(),
                     Node {
@@ -545,7 +603,7 @@ impl ChainTree {
                         linked,
                         validated: false,
                         excluded: false,
-                        direct: BigUint::default(),
+                        handle,
                     },
                 );
                 if let Some(parent) = &fact.parent_block_hash {
@@ -581,7 +639,10 @@ impl ChainTree {
             .get(&id)
             .map(|g| g.work.clone())
             .unwrap_or_default();
-        self.blocks.get_mut(&hash).unwrap().direct += &work - &old;
+        self.direct_work[self.blocks[&hash].handle] += &work - &old;
+        if !self.replaying {
+            self.route_component(&hash);
+        }
         self.grinds.insert(
             id,
             Grind {
@@ -645,6 +706,7 @@ impl ChainTree {
             pending = deferred;
         }
         tree.replaying = false;
+        tree.rebuild_weights();
         tree.project();
         tree.revision = tree.revision.max(revision_floor);
         Ok(tree)
@@ -703,7 +765,7 @@ impl ChainTree {
             parent_block_hash: n.fact.parent_block_hash.clone(),
             block_height: n.fact.block_height,
             difficulty_anchor: self.difficulty_anchor(hash),
-            work: exact(&n.direct),
+            work: exact(&self.direct_work[n.handle]),
             child_hashes: self.children(hash),
             work_contributions,
             attributed_runs,
@@ -751,26 +813,21 @@ impl ChainTree {
         if from == to || from == empty_state() {
             return self.executed_set_produced(&to);
         }
-        for (hash, n) in &self.blocks {
-            if n.snapshot.post_state_cid != to
-                || n.snapshot.post_state_cid == n.snapshot.prev_state_cid
-                || !self.anchored(hash)
-            {
-                continue;
-            }
-            let mut at = Some(hash.as_str());
-            while let Some(h) = at {
-                let n = &self.blocks[h];
-                if n.snapshot.post_state_cid == from
-                    && n.snapshot.post_state_cid != n.snapshot.prev_state_cid
-                    && self.anchored(h)
-                {
-                    return true;
-                }
-                at = n.fact.parent_block_hash.as_deref();
-            }
-        }
-        false
+        // Producer lookup/anchoring still scan the graph; the enclosure test
+        // itself follows Swift's disjoint outermost Euler ranges.
+        let producers = |state: &str| {
+            self.blocks
+                .iter()
+                .filter(|(h, n)| {
+                    n.snapshot.post_state_cid == state
+                        && n.snapshot.post_state_cid != n.snapshot.prev_state_cid
+                        && self.anchored(h)
+                })
+                .map(|(_, n)| n.handle)
+                .collect::<Vec<_>>()
+        };
+        self.weights
+            .any_encloses(&producers(&from), &producers(&to))
     }
 }
 fn replay_key(batch: &BlockImportBatch) -> (u8, u64, Target, String, String) {
@@ -876,7 +933,7 @@ impl ChainTree {
                 .blocks
                 .iter()
                 .filter(|(h, _)| self.nearest_carrier(h, directory).as_deref() == Some(committer))
-                .map(|(_, n)| n.direct.clone())
+                .map(|(_, n)| self.direct_work[n.handle].clone())
                 .sum(),
         ))
     }
@@ -954,7 +1011,9 @@ impl ChainTree {
             if !self.capacity() {
                 return Err(RestoreError::RevisionExhausted);
             }
-            self.blocks.get_mut(child).unwrap().direct += &work - &old;
+            self.direct_work[self.blocks[child].handle] += &work - &old;
+            self.weights
+                .changed(self.blocks[child].handle, &self.direct_work);
             self.grinds.insert(
                 id,
                 Grind {
@@ -1776,6 +1835,7 @@ impl ChainTree {
             || self.reserved != b.reserved
             || self.context != b.context
             || self.blocks != b.blocks
+            || self.direct_work != b.direct_work
             || self.grinds != b.grinds
             || self.canonical != b.canonical
             || self.served != b.served
@@ -2066,6 +2126,34 @@ pub enum ChildConnectionExecution {
     Unavailable,
 }
 impl ChainTree {
+    /// Rebase only a sealed invalid-execution verdict onto the live graph.
+    /// Tip changes do not invalidate it; changed ancestry or context does.
+    pub fn refresh_child_rejection(
+        &self,
+        rejection: VerifiedChildRejection,
+    ) -> Result<Option<VerifiedChildRejection>, AdmissionError> {
+        let base = &rejection.prepared.base;
+        let cid = rejection.block_hash();
+        let Some(node) = self.blocks.get(cid) else {
+            return Ok(None);
+        };
+        if self.context != base.context
+            || node.validated
+            || node.excluded
+            || base.blocks.get(cid).is_none_or(|old| old.fact != node.fact)
+            || node
+                .fact
+                .parent_block_hash
+                .as_deref()
+                .is_some_and(|parent| !self.anchored(parent))
+        {
+            return Ok(None);
+        }
+        match self.child_execution_rejection(cid)? {
+            ChildConnectionExecution::Rejected(rejection) => Ok(Some(rejection)),
+            _ => unreachable!(),
+        }
+    }
     fn child_execution_rejection(
         &self,
         hash: &str,
