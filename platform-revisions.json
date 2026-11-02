@@ -30,17 +30,17 @@
     {
       "directory": "volume-broker-rs",
       "repository": "0xLattice/volume-broker-rs",
-      "commit": "733b9c49cbb82cdad53228a8ed689e8cb1c313e4"
+      "commit": "7939e3d764dd520134812d06421bc0c7d4209d1d"
     },
     {
       "directory": "lattice-rs",
       "repository": "0xLattice/lattice-rs",
-      "commit": "e988da559b748274781917d8c101b2eccdf3d39f"
+      "commit": "773b74b5a66f30d961f4870784320a3e4584ec7e"
     },
     {
       "directory": "lattice-sdk-rs",
       "repository": "0xLattice/lattice-sdk-rs",
-      "commit": "73758c46007afe87d391da74fa041c838c5d8ed4"
+      "commit": "c16626b022461c59924c1318a86e6ce36408a189"
     },
     {
       "directory": "lattice-storage-rs",
@@ -75,7 +75,7 @@
     {
       "directory": "lattice-ctl-rs",
       "repository": "0xLattice/lattice-ctl-rs",
-      "commit": "853c7d17d18dc960d6f4959b5611cc8cd614e88f"
+      "commit": "9dc081b30c906c8d429f123f649f847f4c94b96b"
     },
     {
       "directory": "ivy-rs",
@@ -85,7 +85,7 @@
     {
       "directory": "lattice-node-rs",
       "repository": "0xLattice/lattice-node-rs",
-      "commit": "26d69fba1b9ee83e98b387bb245a075095d130e2"
+      "commit": "5f66fd5c3ab9f9b2be171f048c75eda2825cbe9a"
     }
   ]
 }
