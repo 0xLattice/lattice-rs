@@ -12,11 +12,11 @@ python3.12 scripts/platform-bootstrap.py platform-revisions.json \
   --destination ./rust-platform --check --report ./bootstrap-result.json
 ```
 
-The manifest pins the initial code checkpoint of `lattice-rs`; this manifest and
-publication documentation were added in a later documentation-only commit to
-avoid a self-referential commit hash. All 17 pinned source trees passed locked
-native all-target compilation from isolated local Git checkouts. Test, Swift,
-formal, browser and GPU evidence have their own narrower scopes.
+The manifest pins the `lattice-rs` source commit preceding this manifest update
+to avoid a self-referential commit hash. The initial checkpoint passed all 17
+locked native all-target checks from isolated Git checkouts. Later checkpoints
+have their own test evidence and CI reports; prior results do not automatically
+validate newer source. Swift, formal, browser and GPU evidence have narrower scopes.
 
 The local inventory is explicit in `scripts/platform-check.py`:
 

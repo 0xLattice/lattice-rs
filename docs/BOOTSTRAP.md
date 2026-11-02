@@ -16,7 +16,7 @@ The supported directory names are the 17 names in `REPOSITORIES` at the top of
 the script. Every directory and remote mapping must be unique. Branch names,
 tags, abbreviated commits, arbitrary URLs, embedded credentials, different
 organizations and incomplete manifests fail before any Git fetch. The checked-in `platform-revisions.json` contains the actual published checkpoint
-revisions. Its lattice-rs entry pins the code commit preceding the manifest-only
+revisions. Its lattice-rs entry pins the source commit preceding the manifest-only
 publication update, avoiding a self-referential hash.
 
 ```sh

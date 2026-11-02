@@ -20,7 +20,7 @@
     {
       "directory": "cashew-rs",
       "repository": "0xLattice/cashew-rs",
-      "commit": "dd260708934bec14b9930629ad63c53bf34c93ac"
+      "commit": "ba341b7af36e5769d4423cd486ae8f2ac81f9f0c"
     },
     {
       "directory": "tally-rs",
@@ -35,7 +35,7 @@
     {
       "directory": "lattice-rs",
       "repository": "0xLattice/lattice-rs",
-      "commit": "94458941d83d998eb519f7dc4ab6ed6451026cfa"
+      "commit": "c01592e07d361dedd4e679089182a9be4349c9d3"
     },
     {
       "directory": "lattice-sdk-rs",
@@ -50,7 +50,7 @@
     {
       "directory": "lattice-miner-gpu",
       "repository": "0xLattice/lattice-miner-gpu",
-      "commit": "dcfe93077c967ed015afa3c1885246e823ca2b7f"
+      "commit": "c40e0a95df11e64712a45d2261f39ec4245ae1c7"
     },
     {
       "directory": "lattice-mining-rs",
@@ -60,7 +60,7 @@
     {
       "directory": "lattice-sponsor-rs",
       "repository": "0xLattice/lattice-sponsor-rs",
-      "commit": "b6f7554accf9e44c916f46a4c5e5fb9b1fb03d43"
+      "commit": "f628222b0aaba9883d6395567da534fd20f5cdec"
     },
     {
       "directory": "lattice-light-client-rs",
@@ -75,7 +75,7 @@
     {
       "directory": "lattice-ctl-rs",
       "repository": "0xLattice/lattice-ctl-rs",
-      "commit": "fb46a1ab92ad18e5a8cec00aa39235cc60fd102d"
+      "commit": "942ba2cdbc90a7b2fd5a2d83e2c8cad35d110f70"
     },
     {
       "directory": "ivy-rs",
@@ -85,7 +85,7 @@
     {
       "directory": "lattice-node-rs",
       "repository": "0xLattice/lattice-node-rs",
-      "commit": "03cd652cb9a16009399ea6e8ae7c24f970d0604c"
+      "commit": "451cab2e7701ad68641655a8fe2ea5e4fd486aa8"
     }
   ]
 }
