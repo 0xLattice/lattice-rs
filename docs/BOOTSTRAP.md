@@ -78,3 +78,34 @@ existing files, dirty/ignored refusal, wrong organization/commit refusal,
 unavailable revision cleanup, manifest/path dependency validation, suppression
 of credential-bearing diagnostics and exclusive failure reports. No GitHub push,
 repository creation or actual remote network access occurs in these tests.
+
+## Continuous integration
+
+The platform workflow first checks the bootstrap tools with local fixtures. Its
+Linux, macOS and Windows jobs then fetch the complete reviewed sibling manifest
+and run formatting, strict all-target Clippy, and native all-target tests in all
+17 repositories. `platform-ci-manifest.py` replaces only the workflow repository's
+pin with the actual checked-out commit, so a new change cannot silently test the
+older checkpoint instead. Sibling pins remain exact; reports record the full set.
+Tracked edits, a foreign origin and a source subdirectory are rejected.
+
+Private sibling access requires an Actions secret named
+`LATTICE_PLATFORM_READ_TOKEN` with Contents read access to all 17 manifest
+repositories. A suitably scoped installation token or fine-grained token works;
+GitHub's default workflow token covers only the workflow repository. The fetch
+credential is present only in the bootstrap step and is not stored in Git config
+or supplied to Cargo/test processes. Checkout credentials are not persisted.
+The check runner refuses known token environment variables, and build outputs
+live outside source. Fork pull requests without that secret cannot run the
+private platform job; the missing access is a failure, not a passing skipped
+validation. Do not use `pull_request_target` to run untrusted changes with secrets.
+
+The workflow is prepared, but cross-repository authentication and actual green
+remote runs must be verified before claiming CI coverage. Local bootstrap and
+native tests do not establish Windows/Linux behavior. Optional GPU hardware,
+WASM/browser targets, Swift or formal oracle regeneration, and daemon scenario
+scripts remain separate checks.
+
+`python3.12 scripts/test_platform_ci.py` exercises current-commit substitution,
+wrong-origin/dirty-source refusal, credential exclusion, all 51 fixture checks,
+and a real formatting failure that must leave a failed report.

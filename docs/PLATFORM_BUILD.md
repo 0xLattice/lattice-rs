@@ -70,9 +70,10 @@ correctness, full platform functionality, or release availability. Keep those
 checks and their reports separate. Repository PORTING documents identify the
 remaining implementation gaps and narrower verification evidence.
 
-Standalone CI and releases still require workflow checkout layouts that use
-these exact sibling revisions and fresh remote build/test results. Existing Ivy
-CI does not yet provide its sibling Tally dependency.
+The platform workflow now bootstraps these exact siblings and checks all 17
+repositories on Linux, macOS and Windows. Its cross-repository read credential
+must be configured before remote validation can pass. Existing standalone Ivy
+CI still does not provide its sibling Tally dependency. See [BOOTSTRAP.md](BOOTSTRAP.md).
 
 ## Exporting exact local source inputs
 
@@ -126,10 +127,11 @@ escape, duplicate/link rejection and post-extraction mutation detection.
 Only four of the 17 local repositories currently have GitHub workflows:
 `multikey-rs`, `ivy-rs`, `lattice-rs` and `lattice-miner-gpu`. Multikey and the GPU
 worker have self-contained Cargo dependency layouts; their existing workflows
-still need results against the final revisions. Lattice and Ivy workflows check
-out only themselves, while their current manifests require sibling repositories.
-The local export can validate that sibling layout now; it cannot make those
-remote workflow runs valid. The remaining 13 repositories need standalone CI.
+still need results against the final revisions. The Lattice workflow now provides a central all-17-repository matrix using exact
+sibling pins and the current tested revision. Private access configuration and
+green remote results remain required. The standalone Ivy workflow still checks
+out only itself. The other repositories are covered by the central manifest
+job once operational; standalone per-repository jobs remain to be added.
 
 The published revision manifest now supplies actual source pins. CI still needs
 checkout steps matching those dependencies and fresh build/test results for that
