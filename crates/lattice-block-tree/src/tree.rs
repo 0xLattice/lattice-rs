@@ -1887,23 +1887,79 @@ pub enum RootConnectionExecution {
     Rejected(VerifiedRootRejection),
     Unavailable,
 }
-impl ChainTree {
-    pub fn execute_root_connection(
-        &self,
-        job: &ConnectJob,
+/// A local root validation basis; it carries no graph mutation authority.
+/// Only a tree with an executed parent can prepare one. No graph is cloned.
+#[derive(Debug)]
+pub struct RootConnectionTask {
+    context: ChainRuntimeContext,
+    block: String,
+    parent: String,
+    anchor: Option<lattice_validation::DifficultyAnchor>,
+}
+#[derive(Debug)]
+enum RootValidationResult {
+    Accepted(Box<lattice_validation::VerifiedRootTransition>),
+    Rejected,
+    Unavailable,
+}
+/// Sealed worker result. Invalidity cannot be supplied as a public boolean.
+#[derive(Debug)]
+pub struct RootConnectionCompletion {
+    basis: RootConnectionTask,
+    result: RootValidationResult,
+}
+impl RootConnectionTask {
+    pub fn block_hash(&self) -> &str {
+        &self.block
+    }
+    pub fn run(
+        self,
         source: &impl lattice_cashew::ContentSource,
         now: i64,
-    ) -> Result<RootConnectionExecution, AdmissionError> {
+    ) -> Result<RootConnectionCompletion, AdmissionError> {
+        let header = lattice_cashew::Volume(
+            lattice_cashew::Header::from_cid(&self.block)
+                .map_err(|_| AdmissionError::ProtocolInvalid)?,
+        );
+        let result =
+            match lattice_validation::validate_root_transition(&header, source, now, self.anchor) {
+                Ok(verified) => RootValidationResult::Accepted(Box::new(verified)),
+                Err(error) if error.is_retriable() => RootValidationResult::Unavailable,
+                Err(_) => RootValidationResult::Rejected,
+            };
+        Ok(RootConnectionCompletion {
+            basis: self,
+            result,
+        })
+    }
+}
+impl RootConnectionCompletion {
+    pub fn accepted_header(&self) -> Option<&lattice_primitives::BlockHeader> {
+        match &self.result {
+            RootValidationResult::Accepted(verified) => Some(verified.header()),
+            _ => None,
+        }
+    }
+    pub fn block_hash(&self) -> &str {
+        &self.basis.block
+    }
+}
+impl ChainTree {
+    fn root_connection_basis(
+        &self,
+        context: &ChainRuntimeContext,
+        hash: &str,
+    ) -> Result<RootConnectionTask, AdmissionError> {
         if !self
             .context
             .as_ref()
-            .is_some_and(|c| c.is_root() && c == job.context())
+            .is_some_and(|c| c.is_root() && c == context)
         {
             return Err(AdmissionError::NotAcceptedAtCurrentChain);
         }
         let node = self
             .blocks
-            .get(job.block_hash())
+            .get(hash)
             .ok_or(AdmissionError::UnavailableEvidence)?;
         let parent = node
             .fact
@@ -1920,32 +1976,70 @@ impl ChainTree {
                 timestamp: a.timestamp,
                 target: UInt256(a.target),
             });
-        let header = lattice_cashew::Volume(
-            lattice_cashew::Header::from_cid(job.block_hash())
-                .map_err(|_| AdmissionError::ProtocolInvalid)?,
-        );
-        match lattice_validation::validate_root_transition(&header, source, now, anchor) {
-            Ok(verified) => {
+        Ok(RootConnectionTask {
+            context: context.clone(),
+            block: hash.into(),
+            parent: parent.into(),
+            anchor,
+        })
+    }
+    pub fn prepare_root_connection(
+        &self,
+        job: &ConnectJob,
+    ) -> Result<RootConnectionTask, AdmissionError> {
+        self.root_connection_basis(job.context(), job.block_hash())
+    }
+    /// Recheck facts on the actor. Tip/revision movement alone does not revoke
+    /// content validation: a valid side-fork block still joins the executed set.
+    /// None is cancelled/duplicate/changed evidence, never an exclusion.
+    pub fn complete_root_connection(
+        &self,
+        completion: RootConnectionCompletion,
+    ) -> Result<Option<RootConnectionExecution>, AdmissionError> {
+        let basis = &completion.basis;
+        let current = match self.root_connection_basis(&basis.context, &basis.block) {
+            Ok(current) => current,
+            Err(
+                AdmissionError::StalePreparation
+                | AdmissionError::UnavailableEvidence
+                | AdmissionError::NotAcceptedAtCurrentChain,
+            ) => return Ok(None),
+            Err(error) => return Err(error),
+        };
+        if current.parent != basis.parent || current.anchor != basis.anchor {
+            return Ok(None);
+        }
+        let result = match completion.result {
+            RootValidationResult::Accepted(verified) => {
                 self.prepare_root_transition(&verified)?;
-                Ok(RootConnectionExecution::Accepted(Box::new(verified)))
+                RootConnectionExecution::Accepted(verified)
             }
-            Err(error) if error.is_retriable() => Ok(RootConnectionExecution::Unavailable),
-            Err(_) => {
+            RootValidationResult::Unavailable => RootConnectionExecution::Unavailable,
+            RootValidationResult::Rejected => {
                 let batch = BlockImportBatch::from_verified_import(vec![ChainFact::Exclusion(
                     ChainExclusionFact {
-                        block_hash: job.block_hash().into(),
+                        block_hash: basis.block.clone(),
                     },
                 )]);
                 let HeaderPreparation::Prepared(prepared) =
-                    self.prepare_batches(job.block_hash().into(), vec![batch], true)?
+                    self.prepare_batches(basis.block.clone(), vec![batch], true)?
                 else {
                     return Err(AdmissionError::LocalVerificationFailure);
                 };
-                Ok(RootConnectionExecution::Rejected(VerifiedRootRejection {
-                    prepared,
-                }))
+                RootConnectionExecution::Rejected(VerifiedRootRejection { prepared })
             }
-        }
+        };
+        Ok(Some(result))
+    }
+    pub fn execute_root_connection(
+        &self,
+        job: &ConnectJob,
+        source: &impl lattice_cashew::ContentSource,
+        now: i64,
+    ) -> Result<RootConnectionExecution, AdmissionError> {
+        let completion = self.prepare_root_connection(job)?.run(source, now)?;
+        self.complete_root_connection(completion)?
+            .ok_or(AdmissionError::StalePreparation)
     }
 }
 
