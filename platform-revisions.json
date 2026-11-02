@@ -35,7 +35,7 @@
     {
       "directory": "lattice-rs",
       "repository": "0xLattice/lattice-rs",
-      "commit": "773b74b5a66f30d961f4870784320a3e4584ec7e"
+      "commit": "5e64ff09587adceb1d3dbeafc98b8187e8176eac"
     },
     {
       "directory": "lattice-sdk-rs",
@@ -80,12 +80,12 @@
     {
       "directory": "ivy-rs",
       "repository": "0xLattice/ivy-rs",
-      "commit": "3c37b4a6ad41bbafa39a136db7cb47618507608d"
+      "commit": "284ad813559ea47d00805b71b9b8336308128d00"
     },
     {
       "directory": "lattice-node-rs",
       "repository": "0xLattice/lattice-node-rs",
-      "commit": "5f66fd5c3ab9f9b2be171f048c75eda2825cbe9a"
+      "commit": "88043aee5758b373e0e954f6bc20953b176fb3f1"
     }
   ]
 }
