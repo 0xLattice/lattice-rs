@@ -35,12 +35,12 @@
     {
       "directory": "lattice-rs",
       "repository": "0xLattice/lattice-rs",
-      "commit": "432b67f06a772373f0431517497378191b165ba1"
+      "commit": "e988da559b748274781917d8c101b2eccdf3d39f"
     },
     {
       "directory": "lattice-sdk-rs",
       "repository": "0xLattice/lattice-sdk-rs",
-      "commit": "2c0898f92e9aa4f0d853ce36a5b31b78ff72093c"
+      "commit": "73758c46007afe87d391da74fa041c838c5d8ed4"
     },
     {
       "directory": "lattice-storage-rs",
