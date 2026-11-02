@@ -1,0 +1,91 @@
+{
+  "format": "lattice-platform-revisions-v1",
+  "organization": "0xLattice",
+  "repositories": [
+    {
+      "directory": "array-trie-rs",
+      "repository": "0xLattice/array-trie-rs",
+      "commit": "3ad1694289bdd9a95d5d81f546ca58ae8fc13c3a"
+    },
+    {
+      "directory": "multikey-rs",
+      "repository": "0xLattice/multikey-rs",
+      "commit": "9f629d9844788f933ed730fa1e53e0c0fc00cd62"
+    },
+    {
+      "directory": "trie-dictionary-rs",
+      "repository": "0xLattice/trie-dictionary-rs",
+      "commit": "98ac05b7b8a6c15ad1d8eb686804348b2e0b2570"
+    },
+    {
+      "directory": "cashew-rs",
+      "repository": "0xLattice/cashew-rs",
+      "commit": "dd260708934bec14b9930629ad63c53bf34c93ac"
+    },
+    {
+      "directory": "tally-rs",
+      "repository": "0xLattice/tally-rs",
+      "commit": "6d991d3fdd8ead8673b8aa4479d9e950a16f02e3"
+    },
+    {
+      "directory": "volume-broker-rs",
+      "repository": "0xLattice/volume-broker-rs",
+      "commit": "05fcb522cc87a7395dca476d142da69f56b211fc"
+    },
+    {
+      "directory": "lattice-rs",
+      "repository": "0xLattice/lattice-rs",
+      "commit": "94458941d83d998eb519f7dc4ab6ed6451026cfa"
+    },
+    {
+      "directory": "lattice-sdk-rs",
+      "repository": "0xLattice/lattice-sdk-rs",
+      "commit": "2c0898f92e9aa4f0d853ce36a5b31b78ff72093c"
+    },
+    {
+      "directory": "lattice-storage-rs",
+      "repository": "0xLattice/lattice-storage-rs",
+      "commit": "8ee63ebd84b9629a4d6e24b57527b260e934c30e"
+    },
+    {
+      "directory": "lattice-miner-gpu",
+      "repository": "0xLattice/lattice-miner-gpu",
+      "commit": "dcfe93077c967ed015afa3c1885246e823ca2b7f"
+    },
+    {
+      "directory": "lattice-mining-rs",
+      "repository": "0xLattice/lattice-mining-rs",
+      "commit": "19f6b3601a2d23adb16a4010d067c5ba9b1a0421"
+    },
+    {
+      "directory": "lattice-sponsor-rs",
+      "repository": "0xLattice/lattice-sponsor-rs",
+      "commit": "b6f7554accf9e44c916f46a4c5e5fb9b1fb03d43"
+    },
+    {
+      "directory": "lattice-light-client-rs",
+      "repository": "0xLattice/lattice-light-client-rs",
+      "commit": "982570b059e819bccaec45f96be318dfb881c569"
+    },
+    {
+      "directory": "uint256-rs",
+      "repository": "0xLattice/uint256-rs",
+      "commit": "36597f235b00dc3062eba7c38f2fa23230b8ae4c"
+    },
+    {
+      "directory": "lattice-ctl-rs",
+      "repository": "0xLattice/lattice-ctl-rs",
+      "commit": "fb46a1ab92ad18e5a8cec00aa39235cc60fd102d"
+    },
+    {
+      "directory": "ivy-rs",
+      "repository": "0xLattice/ivy-rs",
+      "commit": "dca23bc4d3f2ba128f5153abe0c58869ac4da772"
+    },
+    {
+      "directory": "lattice-node-rs",
+      "repository": "0xLattice/lattice-node-rs",
+      "commit": "03cd652cb9a16009399ea6e8ae7c24f970d0604c"
+    }
+  ]
+}

@@ -1,10 +1,22 @@
 # Building the separate Rust platform repositories
 
-The platform remains split across repositories. Current development uses sibling
-checkouts because several Rust ports have not been published or assigned remote
-commit pins yet. This layout is not a reproducible remote release: local work
-includes new, uncommitted files. Do not replace missing pins with the original
-outdated Rust repository HEADs and assume equivalent functionality.
+The platform is published as 17 separate repositories in `0xLattice` on
+`codex/rust-platform-port`. The reviewed source revisions are pinned in
+[`platform-revisions.json`](../platform-revisions.json). New repositories are
+private; access requires configured GitHub credentials. Existing repository
+visibility and default branches are preserved. This is a development checkpoint,
+not a complete platform release.
+
+```sh
+python3.12 scripts/platform-bootstrap.py platform-revisions.json \
+  --destination ./rust-platform --check --report ./bootstrap-result.json
+```
+
+The manifest pins the initial code checkpoint of `lattice-rs`; this manifest and
+publication documentation were added in a later documentation-only commit to
+avoid a self-referential commit hash. All 17 pinned source trees passed locked
+native all-target compilation from isolated local Git checkouts. Test, Swift,
+formal, browser and GPU evidence have their own narrower scopes.
 
 The local inventory is explicit in `scripts/platform-check.py`:
 
@@ -58,12 +70,9 @@ correctness, full platform functionality, or release availability. Keep those
 checks and their reports separate. Repository PORTING documents identify the
 remaining implementation gaps and narrower verification evidence.
 
-Before standalone CI/release can be claimed, create actual reviewable commits,
-resolve sibling dependencies to real published revisions or versioned crates,
-update each repository's CI checkout layout, and build/test those exact revisions
-from clean checkouts. Existing standalone Ivy CI currently does not provide its
-new sibling Tally dependency; this audit reports the local arrangement, not a
-claim that that remote workflow is fixed.
+Standalone CI and releases still require workflow checkout layouts that use
+these exact sibling revisions and fresh remote build/test results. Existing Ivy
+CI does not yet provide its sibling Tally dependency.
 
 ## Exporting exact local source inputs
 
@@ -122,14 +131,9 @@ out only themselves, while their current manifests require sibling repositories.
 The local export can validate that sibling layout now; it cannot make those
 remote workflow runs valid. The remaining 13 repositories need standalone CI.
 
-No sibling checkout is added with an old or invented revision: current ports
-include unpublished/uncommitted source, so existing remote HEADs cannot identify
-these inputs. Publication still requires reviewable commits in the separate
-repositories, actual published/versioned dependency pins (or an explicit CI
-manifest of real source revisions), checkout steps matching those dependencies,
-and fresh CI build/test results for that exact set. The source archive is a
-reviewable local checkpoint that can be transferred; it is not a substitute for
-those publication steps.
+The published revision manifest now supplies actual source pins. CI still needs
+checkout steps matching those dependencies and fresh build/test results for that
+exact set. Local compilation does not establish that remote workflows pass.
 
 The 2026-11-02 local checkpoint `target/platform-source-20261102-v2.tar`
 (SHA-256 `d73d5ee00e00dda436a65d9df96659b094125ddc25d5ed6c75a3aa0f53e968e1`)
@@ -145,5 +149,5 @@ results apply to the archive's exact inputs, not later ongoing source edits.
 complete manifest of real repository commit IDs and builds isolated sibling
 checkouts with configured Git authentication. It refuses dirty or partial
 destinations and never invents revision pins. See [BOOTSTRAP.md](BOOTSTRAP.md).
-Local fixture tests cover all 17 repositories; an actual remote bootstrap still
-requires publishing the reviewed commits and access to private repositories.
+Local fixture tests cover all 17 repositories. Remote bootstrap requires access
+to the private repositories.
